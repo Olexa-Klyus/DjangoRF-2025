@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "djangorf-2025"
+version = "0.1.0"
+description = ""
+authors = ["Olexa-Klyus <olexakljus@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+djangorestframework = "^3.15.2"
+mysqlclient = "^2.2.6"
+django-dotenv = "^1.4.2"
+django-filter = "^24.3"
+djangorestframework-simplejwt = "^5.3.1"
+
+
+[tool.poetry.group.dev.dependencies]
+isort = "^5.13.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

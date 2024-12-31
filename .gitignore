@@ -1,0 +1,10 @@
+.idea
+.venv
+mysql
+.env
+/poetry.lock
+
+/apps/adverts/migrations/*
+/apps/categories/migrations/*
+/apps/user/migrations/*
+/apps/body_styles/migrations/*
