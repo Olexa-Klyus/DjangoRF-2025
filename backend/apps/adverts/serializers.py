@@ -8,9 +8,9 @@ class AdvertCreateSerializer(serializers.ModelSerializer):
         model = AdvertModel
 
         fields = (
-            'id', 'title', 'user_id', 'categories', 'brand', 'car_model', 'year', 'mileage', 'boby_style',
+            'title', 'user_id', 'categories', 'brand', 'car_model', 'year', 'mileage', 'boby_style',
             'region', 'city',
-            'price', 'currency', 'description', 'gearbox', 'fuel', 'created_at', 'updated_at', 'expired_at'
+            'price', 'currency', 'description', 'gearbox', 'fuel', 'expired_at'
         )
 
 
@@ -20,7 +20,19 @@ class AdvertGetInfoSerializer(serializers.ModelSerializer):
 
         fields = (
             'id', 'user_id', 'categories', 'brand', 'car_model', 'year', 'mileage', 'boby_style',
-            'region', 'city',
+            'region', 'city', 'auto_salon',
             'price', 'currency', 'description', 'gearbox', 'fuel', 'created_at', 'updated_at', 'expired_at'
         )
         depth = 1
+
+
+class AdvertPhotoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AdvertModel
+        fields = ('photo',)
+
+
+class AdvertAutoSalonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AdvertModel
+        fields = ('auto_salon',)

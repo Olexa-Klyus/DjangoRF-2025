@@ -1,8 +1,10 @@
 from django.core import validators as V
 from django.db import models
 
+from apps.auto_salon.models import AutoSalonModel
 from core.enums import RegexEnum
 from core.models import BaseModel
+from core.services.file_service import upload_advert_photo
 
 from apps.categories.models import CategoryModel
 
@@ -28,6 +30,9 @@ class AdvertModel(BaseModel):
                                                            V.MaxLengthValidator(255)])
     gearbox = models.IntegerField(null=True)
     fuel = models.IntegerField(null=True)
+    photo = models.ImageField(upload_to=upload_advert_photo, blank=True)
+
+    auto_salon = models.ForeignKey(AutoSalonModel, on_delete=models.CASCADE, null=True)
 
     expired_at = models.DateTimeField(null=True)
     user_id = models.IntegerField(null=True)
