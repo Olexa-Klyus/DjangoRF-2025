@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from apps.body_styles.models import BodyStylesModel
+from apps.car_model.models import CarModelModel
 
 
-class BodyStylesSerializer(serializers.ModelSerializer):
+class CarModelSerializer(serializers.ModelSerializer):
     class Meta:
-        model = BodyStylesModel
+        model = CarModelModel
 
         fields = (
             'name', 'value', 'parent_id', 'category_id'

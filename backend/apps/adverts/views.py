@@ -1,4 +1,5 @@
 from django.contrib.auth.models import Group
+from guardian.models import UserObjectPermission
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, GenericAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -58,24 +59,46 @@ class AdvertAddAutoSalonView(UpdateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        # group = Group.objects.create(name='salon Mazda2')
-        group = Group.objects.get(name='salon Mazda2')
 
-        group.permissions.add(25, 26, 27, 28)
-        # print(group.permissions.all())
+        # obj_perm = UserObjectPermission.objects.assign_perm('change_group', user, obj=group2)
 
-        user.groups.add(group)
-        if user.has_perm('advertmodel.change_advertmodel'):
-            print('has permission!!!')
+        group1 = Group.objects.get(name='salon Mazda')
+        group2 = Group.objects.get(name='salon Mazda2')
+
+        if user.has_perm('change_group', group2):
+            print(f'{user.profile.name} has permission change_group {group2.name}')
+        else:
+            print(f'{user.profile.name} has not permission change_group {group2.name}')
+
+        if user.has_perm('change_group', group1):
+            print(f'{user.profile.name} has permission change_group {group1.name}')
+        else:
+            print(f'{user.profile.name} has not permission change_group {group1.name}')
+
+        if user.has_perm('change_group'):
+            print(f'{user.profile.name} has permission change_group all groups')
+        else:
+            print(f'{user.profile.name} has not permission change_group all groups')
+
+        # # group = Group.objects.create(name='salon Mazda2')
+        # group = Group.objects.get(name='salon Mazda2')
+        #
+        # group.permissions.add(25, 26, 27, 28)
+        # # print(group.permissions.all())
+        #
+        # user.groups.add(group)
+        # if user.has_perm('advertmodel.change_advertmodel'):
+        #     print('has permission!!!')
 
         # user.user_permissions.add(41, 42, 43, 44)
         # print(user.user_permissions.all())
         # if user.has_perm('auto_salon.add_autosalonmodel'):
         #     print('has permission!!!')
 
-        return AdvertModel.objects.filter(user_id=self.request.user.id)
+        return AdvertModel.objects.all()
+        # return AdvertModel.objects.filter(user_id=self.request.user.id)
 
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
     serializer_class = AdvertAutoSalonSerializer
 
     http_method_names = ['patch']

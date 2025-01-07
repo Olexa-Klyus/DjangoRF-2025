@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
+    'guardian',
 
     # my apps
     'core',
@@ -45,7 +46,7 @@ INSTALLED_APPS = [
     'apps.auth',
     'apps.categories',
     'apps.adverts',
-    'apps.body_styles',
+    'apps.car_model',
     'apps.auto_salon',
 ]
 

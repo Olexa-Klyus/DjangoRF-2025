@@ -20,7 +20,7 @@ class AdvertModel(BaseModel):
     car_model = models.IntegerField()
     year = models.IntegerField(validators=[V.MinValueValidator(1900), V.MaxValueValidator(2025)])
     mileage = models.FloatField()
-    boby_style = models.IntegerField()
+    car_model = models.IntegerField()
     region = models.IntegerField()
     city = models.IntegerField()
     price = models.IntegerField()

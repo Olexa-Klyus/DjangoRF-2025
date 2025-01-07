@@ -12,6 +12,7 @@ mysqlclient = "^2.2.6"
 django-filter = "^24.3"
 djangorestframework-simplejwt = "^5.3.1"
 pillow = "^11.1.0"
+django-guardian = "^2.4.0"
 
 
 [tool.poetry.group.dev.dependencies]

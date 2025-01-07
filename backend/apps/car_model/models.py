@@ -3,9 +3,9 @@ from django.db import models
 from core.models import BaseAdminModel
 
 
-class BodyStylesModel(BaseAdminModel):
+class CarModelModel(BaseAdminModel):
     class Meta:
-        db_table = 'body_styles'
+        db_table = 'car_models'
 
     name = models.CharField(max_length=50)
     value = models.IntegerField()

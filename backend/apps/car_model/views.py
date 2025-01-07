@@ -3,18 +3,18 @@ from rest_framework.generics import CreateAPIView, GenericAPIView, ListAPIView, 
 from rest_framework.permissions import IsAdminUser, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
-from apps.body_styles.models import BodyStylesModel
-from apps.body_styles.serializers import BodyStylesSerializer
+from apps.car_model.models import CarModelModel
+from apps.car_model.serializers import CarModelSerializer
 
 
 class BodyStylesListCreateView(ListCreateAPIView):
-    queryset = BodyStylesModel.objects.all()
-    serializer_class = BodyStylesSerializer
+    queryset = CarModelModel.objects.all()
+    serializer_class = CarModelSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
 class BodyStylesCreateArrayView(GenericAPIView):
-    queryset = BodyStylesModel.objects.all()
+    queryset = CarModelModel.objects.all()
 
     def post(self, *args, **kwargs):
         data = self.request.data
@@ -24,7 +24,7 @@ class BodyStylesCreateArrayView(GenericAPIView):
             if 'category_id' in self.request.query_params:
                 item['category_id'] = int(self.request.query_params['category_id'])
             item['parent_id'] = item['parentId']
-            serializer = BodyStylesSerializer(data=item)
+            serializer = CarModelSerializer(data=item)
             serializer.is_valid(raise_exception=True)
             serializer.save()
             arr.append(serializer.data)
