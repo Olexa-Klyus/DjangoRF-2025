@@ -7,13 +7,13 @@ from apps.car_model.models import CarModelModel
 from apps.car_model.serializers import CarModelSerializer
 
 
-class BodyStylesListCreateView(ListCreateAPIView):
+class CarModelListCreateView(ListCreateAPIView):
     queryset = CarModelModel.objects.all()
     serializer_class = CarModelSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
-class BodyStylesCreateArrayView(GenericAPIView):
+class CarModelCreateArrayView(GenericAPIView):
     queryset = CarModelModel.objects.all()
 
     def post(self, *args, **kwargs):

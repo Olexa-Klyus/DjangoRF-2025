@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'apps.categories',
     'apps.adverts',
     'apps.car_model',
+    'apps.mark',
     'apps.auto_salon',
 ]
 

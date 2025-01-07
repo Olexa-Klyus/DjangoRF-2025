@@ -17,10 +17,9 @@ class AdvertModel(BaseModel):
 
     categories = models.ForeignKey(CategoryModel, on_delete=models.PROTECT)
     brand = models.IntegerField()
-    car_model = models.IntegerField()
+    mark = models.IntegerField()
     year = models.IntegerField(validators=[V.MinValueValidator(1900), V.MaxValueValidator(2025)])
     mileage = models.FloatField()
-    car_model = models.IntegerField()
     region = models.IntegerField()
     city = models.IntegerField()
     price = models.IntegerField()

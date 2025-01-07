@@ -7,4 +7,7 @@ mysql
 /apps/adverts/migrations/*
 /apps/categories/migrations/*
 /apps/user/migrations/*
-/apps/body_styles/migrations/*
+/apps/car_model/migrations/*
+/apps/mark/migrations/*
+/apps/auto_salon/migrations/*
+
