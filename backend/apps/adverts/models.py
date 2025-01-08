@@ -35,3 +35,5 @@ class AdvertModel(BaseModel):
 
     expired_at = models.DateTimeField(null=True)
     user_id = models.IntegerField(null=True)
+
+
