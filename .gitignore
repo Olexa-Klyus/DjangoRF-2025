@@ -10,4 +10,5 @@ mysql
 /apps/car_model/migrations/*
 /apps/mark/migrations/*
 /apps/auto_salon/migrations/*
+/apps/auto_salon/chat/*
 
