@@ -11,6 +11,7 @@ import os
 
 from django.core.asgi import get_asgi_application
 
+from channels.middleware import BaseMiddleware
 from channels.routing import ProtocolTypeRouter, URLRouter
 
 from core.middlewares.socket_middleware import AuthSocketMiddleware

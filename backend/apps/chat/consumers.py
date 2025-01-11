@@ -9,6 +9,7 @@ class ChatConsumer(GenericAsyncAPIConsumer):
         self.room_name = None
         self.user_name = None
 
+
     async def connect(self):
         if not self.scope['user']:
             return await self.close()
@@ -39,11 +40,12 @@ class ChatConsumer(GenericAsyncAPIConsumer):
             self.room_name,
             {
                 'type': 'sender',
-                'message':data,
-                'user':self.user_name,
-                'id':request_id
+                'message': data,
+                'user': self.user_name,
+                'id': request_id
             }
         )
+
     @database_sync_to_async
     def get_profile_name(self):
         user = self.scope['user']
