@@ -1,14 +1,7 @@
 .idea
 .venv
 mysql
-.env
+
 /poetry.lock
 
-/apps/adverts/migrations/*
-/apps/categories/migrations/*
-/apps/user/migrations/*
-/apps/car_model/migrations/*
-/apps/mark/migrations/*
-/apps/auto_salon/migrations/*
-/apps/auto_salon/chat/*
 

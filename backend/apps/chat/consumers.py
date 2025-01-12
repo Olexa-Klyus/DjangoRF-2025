@@ -14,6 +14,7 @@ class ChatConsumer(GenericAsyncAPIConsumer):
             return await self.close()
 
         await self.accept()
+
         self.room_name = self.scope['url_route']['kwargs']['room']
         self.user_name = await self.get_profile_name()
         await self.channel_layer.group_add(
@@ -29,21 +30,22 @@ class ChatConsumer(GenericAsyncAPIConsumer):
         )
 
     async def sender(self, data):
-        print(data)
+        # print(data)
         await self.send_json(data)
 
     @action()
     async def send_message(self, data, request_id, action):
-        print(action)
+        # print(action)
         await self.channel_layer.group_send(
             self.room_name,
             {
                 'type': 'sender',
-                'message':data,
-                'user':self.user_name,
-                'id':request_id
+                'message': data,
+                'user': self.user_name,
+                'id': request_id
             }
         )
+
     @database_sync_to_async
     def get_profile_name(self):
         user = self.scope['user']
