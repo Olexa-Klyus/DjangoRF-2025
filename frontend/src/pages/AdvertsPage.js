@@ -5,7 +5,7 @@ import {Chat} from "../components/Chat";
 const AdvertsPage = () => {
     return (
         <div>
-            <AdvertForm/>
+            {/*<AdvertForm/>*/}
             <hr/>
             <AdvertsComponent/>
             <hr/>

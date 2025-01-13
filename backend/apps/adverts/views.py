@@ -16,6 +16,7 @@ from apps.adverts.serializers import AdvertCreateSerializer, AdvertGetInfoSerial
 class AdvertCreateView(CreateAPIView):
     queryset = AdvertModel.objects.all()
     serializer_class = AdvertCreateSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 class AdvertGetAllView(ListAPIView):
@@ -41,6 +42,17 @@ class AdvertRetrieveUpdateDestroyView(GenericAPIView):
 
         serializer = AdvertGetInfoSerializer(advert)
 
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
+class AdvertGetUsersAutosView(GenericAPIView):
+    queryset = AdvertModel.objects.all()
+    permission_classes = (IsAuthenticated,)
+    http_method_names = ['get']
+
+    def get(self, *args, **kwargs):
+        adverts = self.queryset.filter(user_id=self.request.user.id)
+        serializer = AdvertGetInfoSerializer(adverts, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
 
 

@@ -1,7 +1,7 @@
 const baseURL = '/api'
 
 const auth = '/auth'
-const adverts = '/auto/search'
+const adverts = '/auto/user/autos'
 
 const urls = {
     auth: {

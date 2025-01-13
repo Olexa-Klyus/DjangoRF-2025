@@ -35,7 +35,9 @@ const AdvertsComponent = () => {
     }
     return (
         <div>
-            {adverts.map(advert => <AdvertComponent key={advert.id} advert={advert}/>)}
+            авто
+            {adverts}
+            {/*{adverts.map(advert => <AdvertComponent key={advert.id} advert={advert}/>)}*/}
         </div>
     );
 };

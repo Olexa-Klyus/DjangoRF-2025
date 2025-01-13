@@ -5,7 +5,7 @@ import {AdvertsPage} from "./pages/AdvertsPage";
 
 const router = createBrowserRouter([
     {
-        path: '', element: <MainLayout/>, children: [
+        path: '/', element: <MainLayout/>, children: [
             {
                 index: true, element: <Navigate to={'login'}/>
             },
@@ -13,7 +13,7 @@ const router = createBrowserRouter([
                 path: 'login', element: <LoginPage/>
             },
             {
-                path: 'auto/search', element: <AdvertsPage/>
+                path: 'adverts', element: <AdvertsPage/>
             }
         ]
     }

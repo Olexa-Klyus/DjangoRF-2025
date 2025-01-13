@@ -8,7 +8,7 @@ const LoginPage = () => {
 
     const onSubmit = async (user) => {
         await authService.login(user)
-        navigate("/users")
+        navigate("/adverts")
     }
     return (
         <form onSubmit={handleSubmit(onSubmit)}>

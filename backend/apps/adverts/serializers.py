@@ -8,7 +8,7 @@ class AdvertCreateSerializer(serializers.ModelSerializer):
         model = AdvertModel
 
         fields = (
-            'title', 'user_id', 'categories', 'brand', 'car_model', 'year', 'mileage', 'boby_style',
+            'title', 'user_id', 'categories', 'brand', 'mark', 'year', 'mileage',
             'region', 'city',
             'price', 'currency', 'description', 'gearbox', 'fuel', 'expired_at'
         )
@@ -19,7 +19,7 @@ class AdvertGetInfoSerializer(serializers.ModelSerializer):
         model = AdvertModel
 
         fields = (
-            'id', 'user_id', 'categories', 'brand', 'car_model', 'year', 'mileage', 'boby_style',
+            'id', 'user_id', 'categories', 'brand', 'mark', 'year', 'mileage',
             'region', 'city', 'auto_salon',
             'price', 'currency', 'description', 'gearbox', 'fuel', 'created_at', 'updated_at', 'expired_at'
         )

@@ -28,7 +28,7 @@
       "patterns": [
         "src"
       ],
-      "extensions": "js"
+      "extensions": "js,css"
     }
   },
   "eslintConfig": {

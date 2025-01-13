@@ -1,7 +1,7 @@
 const AdvertComponent = ({advert}) => {
     return (
         <div>
-            <div>{JSON.stringify(advert)}</div>
+            <div>{advert.year}</div>
         </div>
     );
 };
