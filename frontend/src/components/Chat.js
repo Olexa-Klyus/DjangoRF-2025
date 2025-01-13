@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import {socketService} from "../services/socketService";
+import {client} from "websocket";
 
 const Chat = () => {
     const [room, setRoom] = useState(null)
@@ -8,37 +9,37 @@ const Chat = () => {
     const roomInput = useRef();
 
     useEffect(() => {
-        if (room) {
+        if (room){
             socketItit(room).then(client => setSocketClient(client))
         }
     }, [room]);
 
-    const socketItit = async (room) => {
+    const socketItit = async (room)=>{
         const {chat} = await socketService();
         const client = await chat(room);
 
-        client.onopen = () => {
+        client.onopen = ()=> {
             console.log('chat socket connected');
         }
 
-        client.onmessage = ({data}) => {
-            const {message, user} = JSON.parse(data.toString());
-            setMessages(prevState => [...prevState, {user, message}])
+        client.onmessage = ({data})=>{
+           const {message, user} = JSON.parse( data.toString());
+           setMessages(prevState => [...prevState, {user, message}])
         }
 
         return client
     }
 
-    const roomHandler = () => {
+    const roomHandler =()=>{
         setRoom(roomInput.current.value)
     }
 
     const handleEnterKey = (e) => {
-        if (e.key === 'Enter') {
+        if (e.key == 'Enter'){
             socketClient.send(JSON.stringify({
-                data: e.target.value,
-                action: 'send_message',
-                request_id: new Date().getTime()
+                data:e.target.value,
+                action:'send_message',
+                request_id:new Date().getTime()
             }))
             e.target.value = ''
         }
@@ -49,14 +50,14 @@ const Chat = () => {
         <div>
             {
                 !room
-                    ?
+                ?
                     <div>
                         <input type="text" ref={roomInput}/>
                         <button onClick={roomHandler}>Go to room</button>
                     </div>
                     :
                     <div>
-                        {messages.map(msg => <div>{msg.user}: {msg.message}</div>)}
+                        {messages.map(msg=><div>{msg.user}: {msg.message}</div>)}
                         <input type="text" onKeyDown={handleEnterKey}/>
                     </div>
             }
