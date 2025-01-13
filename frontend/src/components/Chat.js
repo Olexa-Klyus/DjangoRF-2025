@@ -1,6 +1,5 @@
 import {useEffect, useRef, useState} from "react";
 import {socketService} from "../services/socketService";
-import {client} from "websocket";
 
 const Chat = () => {
     const [room, setRoom] = useState(null)
@@ -35,7 +34,7 @@ const Chat = () => {
     }
 
     const handleEnterKey = (e) => {
-        if (e.key == 'Enter'){
+        if (e.key === 'Enter'){
             socketClient.send(JSON.stringify({
                 data:e.target.value,
                 action:'send_message',
