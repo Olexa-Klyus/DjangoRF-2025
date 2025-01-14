@@ -1,6 +1,7 @@
 import {useForm} from "react-hook-form";
-import {authService} from "../services/authService";
+
 import {useNavigate} from "react-router-dom";
+import {authService} from "../services/authService";
 
 const LoginPage = () => {
     const {register, handleSubmit} = useForm();
@@ -8,7 +9,7 @@ const LoginPage = () => {
 
     const onSubmit = async (user) => {
         await authService.login(user)
-        navigate("/adverts")
+        navigate('/adverts')
     }
     return (
         <form onSubmit={handleSubmit(onSubmit)}>

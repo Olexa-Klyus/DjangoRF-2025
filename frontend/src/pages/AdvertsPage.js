@@ -1,6 +1,4 @@
-import {AdvertForm} from "../components/AdvertForm";
 import {AdvertsComponent} from "../components/AdvertsComponent";
-import {Chat} from "../components/Chat";
 
 const AdvertsPage = () => {
     return (
@@ -9,7 +7,6 @@ const AdvertsPage = () => {
             <hr/>
             <AdvertsComponent/>
             <hr/>
-            <Chat/>
         </div>
     );
 };
