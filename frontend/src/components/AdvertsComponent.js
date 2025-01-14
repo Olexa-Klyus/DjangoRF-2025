@@ -5,11 +5,12 @@ import {socketService} from "../services/socketService";
 
 
 const AdvertsComponent = () => {
+
     const [adverts, setAdverts] = useState([])
     const [trigger, setTrigger] = useState(null)
 
     useEffect(() => {
-        advertService.getAll().then(({data}) => setAdverts(data.data))
+        advertService.getAll().then(({data}) => setAdverts(data))
     }, [trigger]);
 
     useEffect(() => {
@@ -35,9 +36,7 @@ const AdvertsComponent = () => {
     }
     return (
         <div>
-            авто
-            {adverts}
-            {/*{adverts.map(advert => <AdvertComponent key={advert.id} advert={advert}/>)}*/}
+            {adverts?.map(advert => <AdvertComponent key={advert.id} advert={advert}/>)}
         </div>
     );
 };

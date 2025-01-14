@@ -1,7 +1,7 @@
 const AdvertComponent = ({advert}) => {
     return (
         <div>
-            <div>{advert.year}</div>
+            <div>{advert.description} - {advert.year}</div>
         </div>
     );
 };
