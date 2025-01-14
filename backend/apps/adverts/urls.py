@@ -1,7 +1,13 @@
 from django.urls import path
 
-from apps.adverts.views import AdvertAddPhotoView, AdvertCreateView, AdvertGetAllView, AdvertGetInfoView, \
-    AdvertAddAutoSalonView, AdvertGetUsersAutosView
+from apps.adverts.views import (
+    AdvertAddAutoSalonView,
+    AdvertAddPhotoView,
+    AdvertCreateView,
+    AdvertGetAllView,
+    AdvertGetInfoView,
+    AdvertGetUsersAutosView,
+)
 
 urlpatterns = [
     path('/used/autos', AdvertCreateView.as_view()),
