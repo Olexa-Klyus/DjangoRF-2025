@@ -2,11 +2,12 @@ import axios from "axios";
 import {baseURL} from "../constants/urls";
 
 const apiService = axios.create({baseURL})
+const apiUserService = axios.create({baseURL})
 
-apiService.interceptors.request.use(req=>{
+apiService.interceptors.request.use(req => {
     const token = localStorage.getItem('access');
 
-    if (token){
+    if (token) {
         req.headers.Authorization = `Bearer ${token}`
     }
 
@@ -14,5 +15,6 @@ apiService.interceptors.request.use(req=>{
 })
 
 export {
-    apiService
+    apiService,
+    apiUserService
 }

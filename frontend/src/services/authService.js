@@ -1,18 +1,18 @@
-import {apiService} from "./apiService";
+import {apiService, apiUserService} from "./apiService";
 import {urls} from "../constants/urls";
 
 const _accessTokenKey = 'access';
 const _refreshTokenKey = 'refresh';
 
 const authService = {
-     register(user) {
-        return apiService.post(urls.auth.register, user)
+    register(user) {
+        return apiUserService.post(urls.auth.register, user)
     },
 
     async login(user) {
         const {data} = await apiService.post(urls.auth.login, user);
         this.setTokens(data);
-        const {data:me}=await this.me();
+        const {data: me} = await this.me();
         return me;
     },
 
@@ -34,7 +34,7 @@ const authService = {
         return localStorage.getItem(_refreshTokenKey);
     },
 
-    deleteTokens(){
+    deleteTokens() {
         localStorage.removeItem(_accessTokenKey)
         localStorage.removeItem(_refreshTokenKey)
     },

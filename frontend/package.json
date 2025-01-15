@@ -31,7 +31,7 @@
       "patterns": [
         "src"
       ],
-      "extensions": "js,css"
+      "extensions": "js,css,ts"
     }
   },
   "eslintConfig": {
