@@ -1,7 +1,6 @@
 import {useForm} from "react-hook-form";
 import {useEffect, useState} from "react";
 
-import {useNavigate} from "react-router-dom";
 import {authService} from "../services/authService";
 
 
@@ -19,7 +18,6 @@ const RegisterPage = () => {
                 const msg = "Для підтвердження реєстрації перейдіть за посиланням на вашому email  "
                 alert(msg + data.email)
                 setError(msg+ data.email)
-                // navigate('/login', {state: {email: user.email, password: user.password}});
             })
         } catch (err) {
             setError(JSON.stringify([{"err_message": err.message}, err.response.data]))
