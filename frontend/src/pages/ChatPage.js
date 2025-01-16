@@ -1,10 +1,10 @@
-import {Chat} from "../components/Chat";
+import {ChatComponent} from "../components/ChatComponent";
 
 const ChatPage = () => {
     return (
         <div>
             <hr/>
-            <Chat/>
+            <ChatComponent/>
             <hr/>
         </div>
     );

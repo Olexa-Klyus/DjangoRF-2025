@@ -14,7 +14,7 @@ const MainLayout = () => {
         </div>
         <br/>
         <footer>
-            2025
+            СХІДНИЦЯ 2025
         </footer>
     </>);
 };

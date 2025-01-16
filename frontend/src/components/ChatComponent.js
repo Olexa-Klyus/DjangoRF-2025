@@ -3,7 +3,7 @@ import {socketService} from "../services/socketService";
 import {client} from "websocket";
 
 
-const Chat = () => {
+const ChatComponent = () => {
     const [room, setRoom] = useState(null)
     const [socketClient, setSocketClient] = useState(null)
     const [messages, setMessages] = useState([])
@@ -67,4 +67,4 @@ const Chat = () => {
 
 };
 
-export {Chat};
+export {ChatComponent};

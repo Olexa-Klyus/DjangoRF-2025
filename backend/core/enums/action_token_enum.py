@@ -15,7 +15,7 @@ class ActionTokenEnum(Enum):
 
     SOCKET = (
         'socket',
-        timedelta(seconds=20)
+        timedelta(seconds=10)
     )
 
     def __init__(self, token_type, lifetime):

@@ -5,20 +5,26 @@ const _accessTokenKey = 'access';
 const _refreshTokenKey = 'refresh';
 
 const authService = {
-    register(user) {
-        return apiUserService.post(urls.auth.register, user)
+    async register(user) {
+        const {data} = await apiUserService.post(urls.auth.register, user)
+        return data
+    },
+
+    async activate(token) {
+        const {data} = await apiUserService.patch(urls.auth.activate + token)
+        return data;
     },
 
     async login(user) {
-        const {data} = await apiService.post(urls.auth.login, user);
+        const {data} = await apiUserService.post(urls.auth.login, user);
         this.setTokens(data);
-        const {data: me} = await this.me();
-        return me;
+        // const {data: me} = await this.me();
+        // return me;
     },
 
-    me() {
-        return apiService.get(urls.auth.me)
-    },
+    // me() {
+    //     return apiService.get(urls.auth.me)
+    // },
 
     setTokens({refresh, access}) {
         localStorage.setItem(_accessTokenKey, access);
