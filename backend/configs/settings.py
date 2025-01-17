@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'apps.mark',
     'apps.auto_salon',
     'apps.chat',
+    'apps.currency',
 ]
 
 MIDDLEWARE = [

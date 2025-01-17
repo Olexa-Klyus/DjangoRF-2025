@@ -22,9 +22,10 @@ class UserModel(AbstractBaseUser, PermissionsMixin, BaseModel):
 
 class ProfileModel(BaseModel):
     class Meta:
-        db_table = 'Profile'
+        db_table = 'profile'
         ordering = ['-id']
 
     name = models.CharField(max_length=20)
     surname = models.CharField(max_length=20)
+    premium_acc = models.BooleanField(default=False)
     user = models.OneToOneField(UserModel, on_delete=models.CASCADE, related_name='profile')

@@ -14,7 +14,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProfileModel
         fields = (
-            'id', 'name', 'surname', 'created_at', 'updated_at'
+            'name', 'surname'
         )
 
 
@@ -42,4 +42,3 @@ class UserSerializer(serializers.ModelSerializer):
         ProfileModel.objects.create(**profile, user=user)
         EmailService.register(user)
         return user
-

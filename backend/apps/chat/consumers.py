@@ -1,9 +1,10 @@
 import datetime
 
 from django.db.models.expressions import F
-from djangochannelsrestframework.generics import GenericAsyncAPIConsumer
+
 from channels.db import database_sync_to_async
 from djangochannelsrestframework.decorators import action
+from djangochannelsrestframework.generics import GenericAsyncAPIConsumer
 
 from apps.chat.models import ChatRoomModel, MessageModel
 
