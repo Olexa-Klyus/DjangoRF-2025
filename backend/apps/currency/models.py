@@ -21,3 +21,4 @@ class CurrencyPointModel(BaseModel):
     saleRate = models.DecimalField(decimal_places=7, max_digits=12, null=True)
     purchaseRate = models.DecimalField(decimal_places=7, max_digits=12, null=True)
     saleRateNB = models.DecimalField(decimal_places=7, max_digits=12, null=True)
+

@@ -46,12 +46,7 @@ class AdvertRetrieveUpdateDestroyView(GenericAPIView):
 
     def get(self, *args, **kwargs):
         advert = self.get_object()
-
-        # print('1111111111111111111111111111111111111')
-
         serializer = AdvertGetInfoSerializer(advert)
-        # serializer.get_point({'point':'45'})
-        # serializer.is_valid(raise_exception=True)
         return Response(serializer.data, status.HTTP_200_OK)
 
 
@@ -119,6 +114,7 @@ class AdvertAddAutoSalonView(UpdateAPIView):
 
         return AdvertModel.objects.all()
         # return AdvertModel.objects.filter(user_id=self.request.user.id)
+
 
     permission_classes = (AllowAny,)
     serializer_class = AdvertAutoSalonSerializer
