@@ -7,6 +7,7 @@ const MainLayout = () => {
             <Link to="/login">  LoginPage   </Link>
             <Link to="/adverts">   AdvertsPage   </Link>
             <Link to="/chat">   ChatPage   </Link>
+            <Link to="/advert_info">   AdvertInfoPage   </Link>
         </header>
         <br/>
         <div>

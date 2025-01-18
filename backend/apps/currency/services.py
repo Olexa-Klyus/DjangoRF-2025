@@ -15,6 +15,11 @@ def get_last_points():
     return points
 
 
+def point_is_actual():
+    point = False
+    return point
+
+
 def get_calculated_prices(price, currency_id):
     points = get_last_points()
     prices = []

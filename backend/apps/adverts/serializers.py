@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from apps.adverts.models import AdvertModel
 from apps.categories.serializers import CategorySerializer
-from apps.currency.services import get_calculated_prices, get_last_points
+from apps.currency.services import get_calculated_prices, get_last_points, point_is_actual
 
 
 class AdvertCreateSerializer(serializers.ModelSerializer):
@@ -45,5 +45,6 @@ class AdvertGetInfoSerializer(serializers.ModelSerializer):
 
         obj['calc_prices'] = get_calculated_prices(instance.price, instance.currency)
         obj['currency_points'] = get_last_points()
-        
+        obj['point_is_actual'] = point_is_actual()
+
         return obj

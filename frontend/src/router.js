@@ -6,6 +6,7 @@ import {ChatPage} from "./pages/ChatPage";
 import {LoginPage} from "./pages/LoginPage";
 import {RegisterPage} from "./pages/RegisterPage";
 import {ActivatePage} from "./pages/ActivatePage";
+import {AdvertInfoPage} from "./pages/AdvertInfoPage";
 
 const router = createBrowserRouter([
     {
@@ -15,7 +16,8 @@ const router = createBrowserRouter([
             {path: 'register', element: <RegisterPage/>},
             {path: 'adverts', element: <AdvertsPage/>},
             {path: 'chat', element: <ChatPage/>},
-            {path: 'activate/:token', element: <ActivatePage/>}
+            {path: 'activate/:token', element: <ActivatePage/>},
+            {path: 'advert_info', element: <AdvertInfoPage/>}
 
         ]
     }

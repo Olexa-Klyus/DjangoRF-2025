@@ -1,4 +1,4 @@
-import {apiService, apiUserService} from "./apiService";
+import {apiService, apiAllowAnyService} from "./apiService";
 import {urls} from "../constants/urls";
 
 const _accessTokenKey = 'access';
@@ -6,17 +6,17 @@ const _refreshTokenKey = 'refresh';
 
 const authService = {
     async register(user) {
-        const {data} = await apiUserService.post(urls.auth.register, user)
+        const {data} = await apiAllowAnyService.post(urls.auth.register, user)
         return data
     },
 
     async activate(token) {
-        const {data} = await apiUserService.patch(urls.auth.activate + token)
+        const {data} = await apiAllowAnyService.patch(urls.auth.activate + token)
         return data;
     },
 
     async login(user) {
-        const {data} = await apiUserService.post(urls.auth.login, user);
+        const {data} = await apiAllowAnyService.post(urls.auth.login, user);
         this.setTokens(data);
         // const {data: me} = await this.me();
         // return me;
