@@ -36,18 +36,22 @@ class AdvertGetAllView(ListAPIView):
 class AdvertGetInfoView(RetrieveAPIView):
     queryset = AdvertModel.objects.all()
     serializer_class = AdvertGetInfoSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
 
 class AdvertRetrieveUpdateDestroyView(GenericAPIView):
     queryset = AdvertModel.objects.all()
     http_method_names = ['get', 'put', 'delete']
+    permission_classes = (AllowAny,)
 
     def get(self, *args, **kwargs):
         advert = self.get_object()
 
-        serializer = AdvertGetInfoSerializer(advert)
+        # print('1111111111111111111111111111111111111')
 
+        serializer = AdvertGetInfoSerializer(advert)
+        # serializer.get_point({'point':'45'})
+        # serializer.is_valid(raise_exception=True)
         return Response(serializer.data, status.HTTP_200_OK)
 
 

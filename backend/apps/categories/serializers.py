@@ -6,5 +6,4 @@ from apps.categories.models import CategoryModel
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoryModel
-        fields = ('id', 'name', 'value')
-
+        fields = ('name', 'value')

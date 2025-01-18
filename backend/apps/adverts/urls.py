@@ -6,14 +6,14 @@ from apps.adverts.views import (
     AdvertCreateView,
     AdvertGetAllView,
     AdvertGetInfoView,
-    AdvertGetUsersAutosView,
+    AdvertGetUsersAutosView, AdvertRetrieveUpdateDestroyView,
 )
 
 urlpatterns = [
     path('/used/autos', AdvertCreateView.as_view()),
     path('/user/autos', AdvertGetUsersAutosView.as_view()),
     path('/search', AdvertGetAllView.as_view()),
-    path('/info/<int:pk>', AdvertGetInfoView.as_view()),
+    path('/info/<int:pk>', AdvertRetrieveUpdateDestroyView.as_view()),
     path('/<int:pk>/photos', AdvertAddPhotoView.as_view()),
     path('/<int:pk>/add_auto_salon', AdvertAddAutoSalonView.as_view()),
 ]
