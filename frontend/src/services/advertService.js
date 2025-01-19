@@ -1,4 +1,4 @@
-import {apiAllowAnyService, apiService} from "./apiService";
+import {apiServiceAllowAny, apiService} from "./apiService";
 import {urls} from "../constants/urls";
 
 const advertService = {
@@ -8,7 +8,7 @@ const advertService = {
 
 
     getById: async (id) => {
-        const response = await apiAllowAnyService.get(urls.advert_info(+id));
+        const response = await apiServiceAllowAny.get(urls.advert_info(+id));
         return response.data;
     },
 

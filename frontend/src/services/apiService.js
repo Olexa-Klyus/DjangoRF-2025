@@ -2,7 +2,8 @@ import axios from "axios";
 import {baseURL} from "../constants/urls";
 
 const apiService = axios.create({baseURL})
-const apiAllowAnyService = axios.create({baseURL})
+const apiServiceAllowAny = axios.create({baseURL})
+
 
 apiService.interceptors.request.use(req => {
     const token = localStorage.getItem('access');
@@ -10,11 +11,11 @@ apiService.interceptors.request.use(req => {
     if (token) {
         req.headers.Authorization = `Bearer ${token}`
     }
-
     return req
 })
 
+
 export {
     apiService,
-    apiAllowAnyService
+    apiServiceAllowAny,
 }
