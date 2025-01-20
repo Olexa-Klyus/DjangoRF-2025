@@ -16,18 +16,6 @@ class AdvertCreateSerializer(serializers.ModelSerializer):
         )
 
 
-class AdvertPhotoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = AdvertModel
-        fields = ('photo',)
-
-
-class AdvertAutoSalonSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = AdvertModel
-        fields = ('auto_salon',)
-
-
 class AdvertGetInfoSerializer(serializers.ModelSerializer):
     categories = CategorySerializer()
 
@@ -48,3 +36,15 @@ class AdvertGetInfoSerializer(serializers.ModelSerializer):
         obj['point_is_actual'] = point_is_actual()
 
         return obj
+
+    
+class AdvertPhotoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AdvertModel
+        fields = ('photo',)
+
+
+class AdvertAutoSalonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AdvertModel
+        fields = ('auto_salon',)

@@ -1,4 +1,5 @@
 from django.contrib.auth.models import Group
+from django.db.models import Count
 
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, GenericAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView
@@ -19,10 +20,27 @@ from apps.adverts.serializers import (
 )
 
 
-class AdvertCreateView(CreateAPIView):
+class AdvertCreateView(GenericAPIView):
     queryset = AdvertModel.objects.all()
     serializer_class = AdvertCreateSerializer
     permission_classes = (IsAuthenticated,)
+
+    def post(self, *args, **kwargs):
+        data = self.request.data
+        user = self.request.user
+
+        adverts_count = self.queryset.filter(user_id=self.request.user.id).count()
+        # print(adverts_count)
+        if not user.profile.premium_acc and adverts_count:
+            return Response(f'account is premium = {user.profile.premium_acc},'
+                            f' adverts_count = {adverts_count}'
+                            , status.HTTP_403_FORBIDDEN)
+
+        serializer = AdvertCreateSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data, status.HTTP_201_CREATED)
 
 
 class AdvertGetAllView(ListAPIView):
@@ -114,7 +132,6 @@ class AdvertAddAutoSalonView(UpdateAPIView):
 
         return AdvertModel.objects.all()
         # return AdvertModel.objects.filter(user_id=self.request.user.id)
-
 
     permission_classes = (AllowAny,)
     serializer_class = AdvertAutoSalonSerializer
