@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from apps.currency.models import CurrencyModel, CurrencyPointModel
+from apps.currency.services import point_is_actual
 
 
 class CurrencySerializer(serializers.ModelSerializer):
@@ -13,11 +14,11 @@ class CurrencySerializer(serializers.ModelSerializer):
 
 
 class CurrencyPointSerializer(serializers.ModelSerializer):
-    # currency = CurrencySerializer()
 
     class Meta:
         model = CurrencyPointModel
 
         fields = (
-            'date_point', 'currency', 'saleRate', 'purchaseRate', 'saleRateNB'
+            'date_point', 'currency', 'saleRate', 'purchaseRate',
         )
+

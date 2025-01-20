@@ -20,5 +20,5 @@ class CurrencyPointModel(BaseModel):
     currency = models.ForeignKey(CurrencyModel, on_delete=models.CASCADE, null=True, related_name='currency_point')
     saleRate = models.DecimalField(decimal_places=7, max_digits=12, null=True)
     purchaseRate = models.DecimalField(decimal_places=7, max_digits=12, null=True)
-    saleRateNB = models.DecimalField(decimal_places=7, max_digits=12, null=True)
+
 

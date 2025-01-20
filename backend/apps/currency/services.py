@@ -1,3 +1,5 @@
+import datetime as dt
+
 from apps.currency.models import CurrencyPointModel
 
 
@@ -16,7 +18,20 @@ def get_last_points():
 
 
 def point_is_actual():
-    point = False
+    point = True
+
+    # до 10 години ранку курс вчорашній, після 10 год. оновлюється на першому запиті з АРІ банку, далі вже тягнем з бази
+    if dt.datetime.now().hour > 10:
+        last_point = CurrencyPointModel.objects.values('updated_at')[1]
+        res = last_point['updated_at']
+        last_date_point = dt.date(res.year, res.month, res.day)
+
+        today = dt.date.today()
+        if last_date_point == today:
+            point = True
+        else:
+            point = False
+
     return point
 
 
