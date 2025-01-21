@@ -56,7 +56,8 @@ class AdvertGetInfoView(GenericAPIView):
         user = self.request.user
 
         visit_add(self.request, advert.id)
-        advert.counter = get_visit_count(advert.id, user)
+        advert.count_all = get_visit_count(advert.id, user)
+        # advert.counter = 0
 
         serializer = AdvertGetInfoSerializer(advert)
         return Response(serializer.data, status.HTTP_200_OK)

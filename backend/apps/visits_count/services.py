@@ -1,5 +1,7 @@
 from itertools import count
 
+from django.db.models import Count
+
 from apps.visits_count.models import VisitCountModel
 
 # from apps.visits_count.serializers import VisitCountCreateSerializer
@@ -23,10 +25,16 @@ def visit_add(request, advert):
 
 
 def get_visit_count(advert, user):
-    counter = 0
+    count_all, count_day, count_week, count_month = [0, 0, 0, 0]
 
     if hasattr(user, 'profile'):
         if user.profile.premium_acc:
-            counter = VisitCountModel.objects.filter(advert=advert).count()
+            qs = VisitCountModel.objects.values('advert', 'created_at').filter(advert=advert)
+            count_all = qs.count()
+            count_day = qs.aggregate(count_day=Count('advert'))
+            count_week = qs.count()
+            count_month = qs.count()
 
-    return counter
+            print(count_day)
+
+    return count_all
