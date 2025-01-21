@@ -7,7 +7,6 @@ from apps.adverts.views import (
     AdvertGetAllView,
     AdvertGetInfoView,
     AdvertGetUsersAutosView,
-    AdvertRetrieveUpdateDestroyView,
 )
 
 urlpatterns = [

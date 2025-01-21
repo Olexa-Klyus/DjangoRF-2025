@@ -7,7 +7,7 @@ const socketService = async () => {
     const {data: {token}} = await authService.getSocketToken();
     return {
         chat: (room) => new W3cwebsocket(`${baseURL}/chat/${room}/?token=${token}`),
-        adverts: ()=> new W3cwebsocket(`${baseURL}/auto/search/?token=${token}`)
+        // adverts: () => new W3cwebsocket(`${baseURL}/auto/user/autos/?token=${token}`)
     }
 }
 

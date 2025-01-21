@@ -8,7 +8,7 @@ const advertService = {
 
 
     getById: async (id) => {
-        const response = await apiServiceAllowAny.get(urls.advert_info(+id));
+        const response = await apiService.get(urls.advert_info(+id));
         return response.data;
     },
 

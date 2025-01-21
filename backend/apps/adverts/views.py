@@ -1,5 +1,7 @@
+from encodings.uu_codec import uu_decode
+from itertools import count
+
 from django.contrib.auth.models import Group
-from django.db.models import Count
 
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, GenericAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView
@@ -18,23 +20,24 @@ from apps.adverts.serializers import (
     AdvertGetInfoSerializer,
     AdvertPhotoSerializer,
 )
+from apps.visits_count.services import get_client_ip, get_visit_count, visit_add
 
 
 class AdvertCreateView(GenericAPIView):
     queryset = AdvertModel.objects.all()
-    serializer_class = AdvertCreateSerializer
+    # serializer_class = AdvertCreateSerializer
     permission_classes = (IsAuthenticated,)
 
     def post(self, *args, **kwargs):
         data = self.request.data
         user = self.request.user
-
         adverts_count = self.queryset.filter(user_id=self.request.user.id).count()
-        # print(adverts_count)
+
         if not user.profile.premium_acc and adverts_count:
             return Response(f'account is premium = {user.profile.premium_acc},'
                             f' adverts_count = {adverts_count}'
                             , status.HTTP_403_FORBIDDEN)
+        data['price_init'] = data['price']
 
         serializer = AdvertCreateSerializer(data=data)
         serializer.is_valid(raise_exception=True)
@@ -43,29 +46,28 @@ class AdvertCreateView(GenericAPIView):
         return Response(serializer.data, status.HTTP_201_CREATED)
 
 
+class AdvertGetInfoView(GenericAPIView):
+    queryset = AdvertModel.objects.all()
+    http_method_names = ['get']
+    permission_classes = (AllowAny,)
+
+    def get(self, *args, **kwargs):
+        advert = self.get_object()
+        user = self.request.user
+
+        visit_add(self.request, advert.id)
+        advert.counter = get_visit_count(advert.id, user)
+
+        serializer = AdvertGetInfoSerializer(advert)
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
 class AdvertGetAllView(ListAPIView):
     queryset = AdvertModel.objects.all()
     serializer_class = AdvertGetInfoSerializer
     pagination_class = AdvertsListPagination
     filterset_class = AdvertsFilters
     permission_classes = (AllowAny,)
-
-
-class AdvertGetInfoView(RetrieveAPIView):
-    queryset = AdvertModel.objects.all()
-    serializer_class = AdvertGetInfoSerializer
-    permission_classes = (AllowAny,)
-
-
-class AdvertRetrieveUpdateDestroyView(GenericAPIView):
-    queryset = AdvertModel.objects.all()
-    http_method_names = ['get', 'put', 'delete']
-    permission_classes = (AllowAny,)
-
-    def get(self, *args, **kwargs):
-        advert = self.get_object()
-        serializer = AdvertGetInfoSerializer(advert)
-        return Response(serializer.data, status.HTTP_200_OK)
 
 
 class AdvertGetUsersAutosView(GenericAPIView):

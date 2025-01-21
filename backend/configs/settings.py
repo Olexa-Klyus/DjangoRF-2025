@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'apps.auto_salon',
     'apps.chat',
     'apps.currency',
+    'apps.visits_count',
 ]
 
 MIDDLEWARE = [

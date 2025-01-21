@@ -13,6 +13,7 @@ const AdvertsComponent = () => {
         advertService.getAll().then(({data}) => setAdverts(data))
     }, [trigger]);
 
+
     useEffect(() => {
         socketInit().then()
     }, []);
