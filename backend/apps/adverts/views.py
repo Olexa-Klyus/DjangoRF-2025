@@ -1,14 +1,9 @@
-from encodings.uu_codec import uu_decode
-from itertools import count
-
 from django.contrib.auth.models import Group
 
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, GenericAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView
+from rest_framework.generics import GenericAPIView, ListAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-
-from guardian.models import UserObjectPermission
 
 from core.pagination import AdvertsListPagination
 
@@ -20,7 +15,7 @@ from apps.adverts.serializers import (
     AdvertGetInfoSerializer,
     AdvertPhotoSerializer,
 )
-from apps.visits_count.services import get_client_ip, get_visit_count, visit_add
+from apps.visits_count.services import get_visit_count, visit_add
 
 
 class AdvertCreateView(GenericAPIView):
@@ -55,9 +50,11 @@ class AdvertGetInfoView(GenericAPIView):
         advert = self.get_object()
         user = self.request.user
 
+        # додали перегляд
         visit_add(self.request, advert.id)
-        advert.count_all = get_visit_count(advert.id, user)
-        # advert.counter = 0
+        # додали до instans лічильники
+        advert.counter = get_visit_count(advert.id, user)
+        # додали до instans середні ціни
 
         serializer = AdvertGetInfoSerializer(advert)
         return Response(serializer.data, status.HTTP_200_OK)

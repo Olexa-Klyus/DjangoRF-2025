@@ -49,7 +49,7 @@ const AdvertInfoComponent = () => {
             <div>price={advert.price}</div>
             <div>price_init={advert.price_init}</div>
             <div>---------------------------------------------------------------------------</div>
-            <h3>ЛІЧИЛЬНИКИ - всього : {advert.count_all}</h3>
+            <h3>ЛІЧИЛЬНИКИ - всього : {JSON.stringify(advert.counter)}</h3>
             <div>---------------------------------------------------------------------------</div>
             <h3>ЦІНИ - {JSON.stringify(advert.calc_prices)}</h3>
             <div>---------------------------------------------------------------------------</div>

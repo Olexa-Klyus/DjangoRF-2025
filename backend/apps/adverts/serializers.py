@@ -1,8 +1,9 @@
 from rest_framework import serializers
 
 from apps.adverts.models import AdvertModel
+from apps.adverts.services import get_calculated_prices
 from apps.categories.serializers import CategorySerializer
-from apps.currency.services import get_calculated_prices, get_last_points, point_is_actual
+from apps.currency.services import get_last_points, point_is_actual
 
 
 class AdvertCreateSerializer(serializers.ModelSerializer):
@@ -31,10 +32,8 @@ class AdvertGetInfoSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         obj = super(AdvertGetInfoSerializer, self).to_representation(instance)
 
-        # if hasattr(instance, 'counter'):
-        #     obj['counter'] = instance.counter
-        if hasattr(instance, 'count_all'):
-            obj['count_all'] = instance.count_all
+        if hasattr(instance, 'counter'):
+            obj['counter'] = instance.counter
         obj['calc_prices'] = get_calculated_prices(instance.price, instance.currency)
         obj['currency_points'] = get_last_points()
         obj['point_is_actual'] = point_is_actual()

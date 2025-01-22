@@ -18,39 +18,20 @@ def get_last_points():
 
 
 def point_is_actual():
-    point = True
+    last_point = CurrencyPointModel.objects.values('updated_at')
+    point = False
 
-    # до 10 години ранку курс вчорашній, після 10 год. оновлюється на першому запиті з АРІ банку, далі вже тягнем з бази
-    if dt.datetime.now().hour > 10:
-        last_point = CurrencyPointModel.objects.values('updated_at')[1]
-        res = last_point['updated_at']
-        last_date_point = dt.date(res.year, res.month, res.day)
+    if last_point:
+        point = True
+        # до 10 години ранку курс вчорашній, після 10 год. оновлюється на першому запиті з АРІ банку, далі вже тягнем з бази
+        if dt.datetime.now().hour >= 10:
+            res = last_point[0]['updated_at']
+            last_date_point = dt.date(res.year, res.month, res.day)
 
-        today = dt.date.today()
-        if last_date_point == today:
-            point = True
-        else:
-            point = False
+            today = dt.date.today()
+            if last_date_point == today:
+                point = True
+            else:
+                point = False
 
     return point
-
-
-def get_calculated_prices(price, currency_id):
-    points = get_last_points()
-    prices = []
-
-    match currency_id:
-        case 1:  # UAH
-            prices = [{"UAH": str(price)},
-                      {"USD": price / points[0]["saleRate"]},
-                      {"EUR": price / points[1]["saleRate"]}]
-        case 2:  # USD
-            prices = [{"USD": str(price)},
-                      {"UAH": price * points[0]["saleRate"]},
-                      {"EUR": price * points[0]["saleRate"] / points[1]["saleRate"]}]
-        case 3:  # EUR
-            prices = [{"EUR": str(price)},
-                      {"UAH": price * points[1]["saleRate"]},
-                      {"USD": price * points[1]["saleRate"] / points[0]["saleRate"]}]
-
-    return prices
