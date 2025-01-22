@@ -15,6 +15,7 @@ from apps.adverts.serializers import (
     AdvertGetInfoSerializer,
     AdvertPhotoSerializer,
 )
+from apps.adverts.services import get_avg_prices
 from apps.visits_count.services import get_visit_count, visit_add
 
 
@@ -55,6 +56,7 @@ class AdvertGetInfoView(GenericAPIView):
         # додали до instans лічильники
         advert.counter = get_visit_count(advert.id, user)
         # додали до instans середні ціни
+        advert.avg_prices = get_avg_prices(advert, user)
 
         serializer = AdvertGetInfoSerializer(advert)
         return Response(serializer.data, status.HTTP_200_OK)

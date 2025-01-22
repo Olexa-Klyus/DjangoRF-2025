@@ -7,6 +7,7 @@ from core.services.file_service import upload_advert_photo
 
 from apps.auto_salon.models import AutoSalonModel
 from apps.categories.models import CategoryModel
+from apps.currency.models import CurrencyModel
 
 
 class AdvertModel(BaseModel):
@@ -25,7 +26,7 @@ class AdvertModel(BaseModel):
 
     price_init = models.IntegerField()
     price = models.IntegerField()
-    currency = models.IntegerField()
+    currency = models.ForeignKey(CurrencyModel, on_delete=models.CASCADE, related_name='advetrs')
 
     description = models.TextField(blank=True, validators=[V.RegexValidator(RegexEnum.NAME.pattern, RegexEnum.NAME.msg),
                                                            V.MaxLengthValidator(255)])
@@ -37,5 +38,3 @@ class AdvertModel(BaseModel):
 
     expired_at = models.DateTimeField(null=True)
     user_id = models.IntegerField(null=True)
-
-
