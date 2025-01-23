@@ -10,6 +10,11 @@ class CurrencyModel(models.Model):
     name = models.CharField(max_length=5)
     desc = models.CharField(max_length=20)
 
+    saleRate = models.DecimalField(decimal_places=7, max_digits=12, null=True)
+    purchaseRate = models.DecimalField(decimal_places=7, max_digits=12, null=True)
+
+    update_at = models.DateField(auto_now=True)
+
 
 class CurrencyPointModel(BaseModel):
     class Meta:
@@ -20,5 +25,3 @@ class CurrencyPointModel(BaseModel):
     currency = models.ForeignKey(CurrencyModel, on_delete=models.CASCADE, null=True, related_name='currency_point')
     saleRate = models.DecimalField(decimal_places=7, max_digits=12, null=True)
     purchaseRate = models.DecimalField(decimal_places=7, max_digits=12, null=True)
-
-

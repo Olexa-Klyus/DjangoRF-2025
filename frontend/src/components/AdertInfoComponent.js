@@ -26,8 +26,8 @@ const AdvertInfoComponent = () => {
                 .then((data) => {
                         if (data) {
                             data.map(point => {
-                                fetch("api/auto/currency_point", {
-                                    method: 'POST',
+                                fetch("api/auto/currency_point_add", {
+                                    method: 'PATCH',
                                     headers: {"Content-Type": "application/json"},
                                     body: JSON.stringify(point)
                                 })
