@@ -11,8 +11,8 @@ class CurrencyModel(models.Model):
     name = models.CharField(max_length=5)
     desc = models.CharField(max_length=20)
 
-    saleRate = models.DecimalField(decimal_places=7, max_digits=12, null=True)
-    purchaseRate = models.DecimalField(decimal_places=7, max_digits=12, null=True)
+    saleRate = models.DecimalField(decimal_places=7, max_digits=12, default=1)
+    purchaseRate = models.DecimalField(decimal_places=7, max_digits=12, default=1)
 
     update_at = models.DateTimeField(auto_now=True)
 

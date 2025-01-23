@@ -35,6 +35,8 @@ class AdvertGetInfoSerializer(serializers.ModelSerializer):
 
         if hasattr(instance, 'counter'):
             obj['counter'] = instance.counter
+        if hasattr(instance, 'avg_prices'):
+            obj['avg_prices'] = instance.avg_prices
         obj['calc_prices'] = get_calculated_prices(instance.price, instance.currency.id)
         obj['currency_points'] = get_currency_points()
         obj['point_is_actual'] = point_is_actual()
