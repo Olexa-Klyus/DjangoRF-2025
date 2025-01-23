@@ -8,7 +8,7 @@ class CurrencySerializer(serializers.ModelSerializer):
         model = CurrencyModel
 
         fields = (
-            'name', 'saleRate', 'purchaseRate',
+            'saleRate', 'purchaseRate'
         )
 
 

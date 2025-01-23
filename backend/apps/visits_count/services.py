@@ -1,5 +1,7 @@
 import datetime as dt
 
+from django.core.exceptions import MultipleObjectsReturned
+
 from apps.visits_count.models import IpAddressModel, VisitCountModel
 
 
@@ -19,13 +21,13 @@ def visit_add(request, advert):
     ip_obj, created = IpAddressModel.objects.get_or_create(ip=ip)
 
     # варіант без накруток
-    # try:
-    #     obj, created = VisitCountModel.objects.get_or_create(ip=ip_obj, advert=advert, user=user.id)
-    # except MultipleObjectsReturned:
-    #     print("Багато записів з цього IP")
+    try:
+        obj, created = VisitCountModel.objects.get_or_create(ip=ip_obj, advert=advert, user=user.id)
+    except MultipleObjectsReturned:
+        print("Багато записів з цього IP")
 
     # варіант з накрутками
-    VisitCountModel.objects.create(ip=ip_obj, advert=advert, user=user.id)
+    # VisitCountModel.objects.create(ip=ip_obj, advert=advert, user=user.id)
 
 
 def get_visit_count(advert, user):
