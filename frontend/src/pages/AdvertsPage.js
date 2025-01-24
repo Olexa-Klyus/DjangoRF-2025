@@ -1,9 +1,9 @@
-import {AdvertsComponent} from "../components/AdvertsComponent";
+import {AdvertsComponent} from "../components/AdvertsComponent/AdvertsComponent";
 
 const AdvertsPage = () => {
     return (
         <div>
-            {/*<AdvertForm/>*/}
+            {/*<AdvertFormComponent/>*/}
             <hr/>
             <AdvertsComponent/>
             <hr/>

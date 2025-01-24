@@ -11,7 +11,7 @@ from apps.adverts.filters import AdvertsFilters
 from apps.adverts.models import AdvertModel
 from apps.adverts.serializers import (
     AdvertAutoSalonSerializer,
-    AdvertCreateSerializer,
+    AdvertCreateUpdateSerializer,
     AdvertGetInfoSerializer,
     AdvertPhotoSerializer,
 )
@@ -21,7 +21,6 @@ from apps.visits_count.services import get_visit_count, visit_add
 
 class AdvertCreateView(GenericAPIView):
     queryset = AdvertModel.objects.all()
-    # serializer_class = AdvertCreateSerializer
     permission_classes = (IsAuthenticated,)
 
     def post(self, *args, **kwargs):
@@ -33,9 +32,13 @@ class AdvertCreateView(GenericAPIView):
             return Response(f'account is premium = {user.profile.premium_acc},'
                             f' adverts_count = {adverts_count}'
                             , status.HTTP_403_FORBIDDEN)
-        data['price_init'] = data['price']
 
-        serializer = AdvertCreateSerializer(data=data)
+        
+
+        data['price_init'] = data['price']
+        data['user_id'] = user.id
+
+        serializer = AdvertCreateUpdateSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
@@ -58,12 +61,15 @@ class AdvertGetInfoView(GenericAPIView):
         # додали до instans середні ціни
         advert.avg_prices = get_avg_prices(advert, user)
 
+        advert.created_at = advert.created_at.strftime("%m/%d/%Y, %H:%M:%S")
+        advert.updated_at = advert.updated_at.strftime("%m/%d/%Y, %H:%M:%S")
+
         serializer = AdvertGetInfoSerializer(advert)
         return Response(serializer.data, status.HTTP_200_OK)
 
 
 class AdvertGetAllView(ListAPIView):
-    queryset = AdvertModel.objects.all()
+    queryset = AdvertModel.objects.filter(is_active=True)
     serializer_class = AdvertGetInfoSerializer
     pagination_class = AdvertsListPagination
     filterset_class = AdvertsFilters

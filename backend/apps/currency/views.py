@@ -10,8 +10,9 @@ from apps.currency.serializers import CurrencyPointSerializer, CurrencySerialize
 class CurrencyPointUpdateView(GenericAPIView):
     queryset = CurrencyModel.objects.all()
     permission_classes = (AllowAny,)
-    http_method_names = ['patch']
+    http_method_names = ['patch',]
     lookup_field = 'name'
+
 
     def patch(self, *args, **kwargs):
         currency_obj = self.get_object()

@@ -15,15 +15,22 @@ def get_avg_prices(advert, user):
 
             if advert.region:
                 avg_region = qs.filter(region=advert.region).aggregate(avg_price_region=Avg('sum_as_UAH'),
-                                                                      counter=Count('price'))
+                                                                       counter=Count('price'))
 
             if advert.city:
                 avg_city = qs.filter(city=advert.city).aggregate(avg_price_city=Avg('sum_as_UAH'),
-                                                                counter=Count('price'))
+                                                                 counter=Count('price'))
 
             avg_all = qs.aggregate(avg_price_all=Avg('sum_as_UAH'), counter=Count('price'))
 
-            print('all_qqssss',avg_all)
-        # потрібно ще поділити на курс і видати в int
+            print('all_qqssss', avg_all)
+
+
+            # потрібно ще поділити на курс і видати в int
+            avg_prices['ccy'] = advert.currency.name
+            avg_prices['avg_all'] = round(avg_all['avg_price_all']/advert.currency.saleRate, 0)
+
+
+
 
     return avg_prices

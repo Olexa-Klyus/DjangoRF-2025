@@ -1,0 +1,14 @@
+.add_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 17vh;
+    z-index: +1;
+    cursor: pointer;
+    font-size: larger;
+    position: fixed;
+    background: linear-gradient(to right, rgb(31, 23, 56), rgba(56, 44, 93, 0.2));
+    height: 5vh;
+    width: 8vw;
+    color: white;
+}

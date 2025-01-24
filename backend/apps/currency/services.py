@@ -1,10 +1,11 @@
 import datetime as dt
+from decimal import Decimal
 
 from apps.currency.models import CurrencyModel
 
 
 def get_currency_points():
-    query_set = CurrencyModel.objects.all()[1:2]
+    query_set = CurrencyModel.objects.all()[1:3]
     points = []
     for item in query_set:
         points.append({
@@ -12,7 +13,7 @@ def get_currency_points():
             "currency_name": item.name,
             'saleRate': item.saleRate,
             'purchaseRate': item.purchaseRate,
-            "currency_point_date": item.update_at,
+            "currency_point_date": item.update_at.strftime("%m/%d/%Y, %H:%M:%S"),
         })
     return points
 
@@ -47,15 +48,15 @@ def get_calculated_prices(price, currency_id):
     match currency_id:
         case 1:  # UAH
             prices = [{"UAH": price},
-                      {"USD": price / points[1].saleRate},
-                      {"EUR": price / points[2].saleRate}]
+                      {"USD": round(price / points[1].saleRate, 0)},
+                      {"EUR": round(price / points[2].saleRate, 0)}]
         case 2:  # USD
             prices = [{"USD": price},
-                      {"UAH": price * points[1].saleRate},
-                      {"EUR": price * points[1].saleRate / points[2].saleRate}]
+                      {"UAH": round(price * points[1].saleRate, 0)},
+                      {"EUR": round(price * points[1].saleRate / points[2].saleRate, 0)}]
         case 3:  # EUR
             prices = [{"EUR": price},
-                      {"UAH": price * points[2].saleRate},
-                      {"USD": price * points[2].saleRate / points[1].saleRate}]
+                      {"UAH": round(price * points[2].saleRate, 0)},
+                      {"USD": round(price * points[2].saleRate / points[1].saleRate, 0)}]
 
     return prices

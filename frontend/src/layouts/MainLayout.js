@@ -1,16 +1,10 @@
-import {Link, Outlet} from "react-router-dom";
+import {Outlet} from "react-router-dom";
+import HeaderComponent from "../components/HeaderComponent";
 
 const MainLayout = () => {
     return (<>
-        <header>
-            <Link to="/register">  RegisterPage   </Link>
-            <Link to="/login">  LoginPage   </Link>
-            <Link to="/adverts">   AdvertsPage   </Link>
-            <Link to="/chat">   ChatPage   </Link>
-            <Link to="/advert_info">   AdvertInfoPage   </Link>
-        </header>
-        <br/>
         <div>
+            <HeaderComponent/>
             <Outlet/>
         </div>
         <br/>

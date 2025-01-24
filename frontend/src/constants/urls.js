@@ -9,8 +9,10 @@ const urls = {
         socket: `auth/socket`
     },
 
+    auto_add: '/auto/used/autos',
     adverts: '/auto/user/autos',
     advert_info: (id) => '/auto/info/' + id,
+    point_update: (ccy) => '/auto/currency_point_add/' + ccy,
 }
 
 export {

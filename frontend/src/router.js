@@ -7,6 +7,7 @@ import {LoginPage} from "./pages/LoginPage";
 import {RegisterPage} from "./pages/RegisterPage";
 import {ActivatePage} from "./pages/ActivatePage";
 import {AdvertInfoPage} from "./pages/AdvertInfoPage";
+import {AdvertFormComponent} from "./components/AdvertFormComponent/AdvertFormComponent";
 
 const router = createBrowserRouter([
     {
@@ -14,10 +15,14 @@ const router = createBrowserRouter([
             {index: true, element: <Navigate to={'login'}/>},
             {path: 'login', element: <LoginPage/>},
             {path: 'register', element: <RegisterPage/>},
+
             {path: 'adverts', element: <AdvertsPage/>},
+            {path: 'adverts/advert_info/:id', element: <AdvertInfoPage/>},
+            {path: 'adverts/add', element: <AdvertFormComponent/>},
+
+
             {path: 'chat', element: <ChatPage/>},
             {path: 'activate/:token', element: <ActivatePage/>},
-            {path: 'advert_info', element: <AdvertInfoPage/>}
 
         ]
     }

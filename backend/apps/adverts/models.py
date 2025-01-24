@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.core import validators as V
 from django.db import models
 
@@ -9,10 +10,14 @@ from apps.auto_salon.models import AutoSalonModel
 from apps.categories.models import CategoryModel
 from apps.currency.models import CurrencyModel
 
+UserModel = get_user_model()
+
 
 class AdvertModel(BaseModel):
     class Meta:
         db_table = 'adverts'
+
+    is_active = models.BooleanField(default=False)
 
     title = models.CharField(max_length=100, blank=True)
 
@@ -34,7 +39,9 @@ class AdvertModel(BaseModel):
     fuel = models.IntegerField(null=True)
     photo = models.ImageField(upload_to=upload_advert_photo, blank=True)
 
-    auto_salon = models.ForeignKey(AutoSalonModel, on_delete=models.CASCADE, null=True)
+    auto_salon = models.ForeignKey(AutoSalonModel, on_delete=models.SET_NULL, null=True)
 
     expired_at = models.DateTimeField(null=True)
-    user_id = models.IntegerField(null=True)
+    user_id = models.ForeignKey(UserModel, on_delete=models.SET_NULL, null=True)
+
+    profanity_edit_count = models.IntegerField(default=0)
