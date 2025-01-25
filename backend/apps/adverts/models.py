@@ -17,7 +17,8 @@ class AdvertModel(BaseModel):
     class Meta:
         db_table = 'adverts'
 
-    is_active = models.BooleanField(default=False)
+    is_visible = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)
 
     title = models.CharField(max_length=100, blank=True)
 

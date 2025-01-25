@@ -23,7 +23,7 @@ def get_avg_prices(advert, user):
 
             avg_all = qs.aggregate(avg_price_all=Avg('sum_as_UAH'), counter=Count('price'))
 
-            print('all_qqssss', avg_all)
+            # print('all_qqssss', avg_all)
 
 
             # потрібно ще поділити на курс і видати в int

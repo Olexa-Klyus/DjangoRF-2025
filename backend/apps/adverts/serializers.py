@@ -1,49 +1,34 @@
 from rest_framework import serializers
 
-from better_profanity import profanity
-
 from apps.adverts.models import AdvertModel
 from apps.categories.serializers import CategorySerializer
 from apps.currency.services import get_calculated_prices, get_currency_points, point_is_actual
 
 
-class AdvertCreateUpdateSerializer(serializers.ModelSerializer):
+class AdvertUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = AdvertModel
 
         fields = (
-            'id', 'title', 'user_id', 'categories', 'brand', 'mark', 'year', 'mileage',
-            'region', 'city',
+            'is_active', 'mileage',
+            'region', 'city', 'profanity_edit_count',
+            'price', 'description', 'gearbox', 'fuel', 'expired_at'
+        )
+
+        extra_kwargs = {'is_active': {'write_only': True, }}
+
+
+class AdvertCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AdvertModel
+
+        fields = (
+            'id', 'is_active', 'title', 'user_id', 'categories', 'brand', 'mark', 'year', 'mileage',
+            'region', 'city', 'profanity_edit_count',
             'price', 'price_init', 'currency', 'description', 'gearbox', 'fuel', 'expired_at'
         )
 
-        # from better_profanity import profanity
-        #
-        # class ProfanityChecker:
-        #
-        #     def check_profanity(self, data: dict):
-        #         print(data)
-        #         if data["profanity_edit_count"] > 4:
-        #             return "Deactivate"
-        #         if profanity.contains_profanity(data["title"]):  # True or False
-        #             data["profanity_edit_count"] += 1
-        #             return False
-        #         if profanity.contains_profanity(data["description"]):  # True or False
-        #             data["profanity_edit_count"] += 1
-        #             return False
-        #         return data
-
- # def validate_price(self, price):
- #        if price <= 0:
- #            raise serializers.ValidationError('Price must be greater than 0')
- #        return price
- #
- #    def validate(self, attrs):
- #        price = attrs.get('price')
- #        size = attrs.get('size')
- #
- #        if price == size:
- #            raise serializers.ValidationError('Price cannot be equal to size')
+        extra_kwargs = {'is_active': {'write_only': True, }}
 
 
 class AdvertGetInfoSerializer(serializers.ModelSerializer):

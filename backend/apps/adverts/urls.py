@@ -7,10 +7,12 @@ from apps.adverts.views import (
     AdvertGetAllView,
     AdvertGetInfoView,
     AdvertGetUsersAutosView,
+    AdvertUpdateView,
 )
 
 urlpatterns = [
     path('/used/autos', AdvertCreateView.as_view()),
+    path('/used/autos/<int:pk>', AdvertUpdateView.as_view()),
     path('/user/autos', AdvertGetUsersAutosView.as_view()),
     path('/search', AdvertGetAllView.as_view()),
     path('/info/<int:pk>', AdvertGetInfoView.as_view()),
