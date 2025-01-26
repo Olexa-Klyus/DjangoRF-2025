@@ -5,10 +5,15 @@ mysql
 /poetry.lock
 
 /apps/adverts/migrations/*
-/apps/categories/migrations/*
-/apps/user/migrations/*
-/apps/car_model/migrations/*
-/apps/mark/migrations/*
 /apps/auto_salon/migrations/*
+
+/apps/car_model/migrations/*
+/apps/categories/migrations/*
 /apps/auto_salon/chat/*
+
+/apps/currency/migrations/*
+/apps/mark/migrations/*
+
+/apps/user/migrations/*
+/apps/visits_count/*
 
