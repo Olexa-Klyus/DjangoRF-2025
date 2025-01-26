@@ -9,9 +9,3 @@ class BaseModel(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-class BaseAdminModel(BaseModel):
-    class Meta:
-        abstract = True
-
-    created_admin = models.IntegerField(null=True)
-    updated_admin = models.IntegerField(null=True)

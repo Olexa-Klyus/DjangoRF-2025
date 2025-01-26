@@ -1,9 +1,7 @@
 from django.db import models
 
-from core.models import BaseAdminModel
 
-
-class CarModelModel(BaseAdminModel):
+class CarModelModel(models.Model):
     class Meta:
         db_table = 'car_models'
 

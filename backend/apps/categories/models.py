@@ -1,9 +1,7 @@
 from django.db import models
 
-from core.models import BaseAdminModel
 
-
-class CategoryModel(BaseAdminModel):
+class CategoryModel(models.Model):
     class Meta:
         db_table = 'categories'
 

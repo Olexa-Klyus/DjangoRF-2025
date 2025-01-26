@@ -1,5 +1,6 @@
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, GenericAPIView, ListCreateAPIView
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from apps.categories.models import CategoryModel
@@ -13,6 +14,7 @@ class CategoryListCreateView(ListCreateAPIView):
 
 class CategoryCreateArrayView(GenericAPIView):
     queryset = CategoryModel.objects.all()
+    permission_classes = (AllowAny,)
 
     def post(self, *args, **kwargs):
         data = self.request.data

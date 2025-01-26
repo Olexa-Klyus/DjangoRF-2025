@@ -1,7 +1,5 @@
 from django.db import models
 
-from core.models import BaseModel
-
 
 class CurrencyModel(models.Model):
     class Meta:
@@ -17,7 +15,7 @@ class CurrencyModel(models.Model):
     update_at = models.DateTimeField(auto_now=True)
 
 
-class CurrencyPointModel(BaseModel):
+class CurrencyPointModel(models.Model):
     class Meta:
         db_table = 'currency_point'
         ordering = ['-date_point']
