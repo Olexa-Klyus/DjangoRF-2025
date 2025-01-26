@@ -38,7 +38,6 @@ const AdvertInfoComponent = () => {
                                 advertService.updatePoint(point['ccy'], point)
                                     .then((data) => {
                                         setPoints('true')
-                                        console.log(data)
                                     })
                             })
                         }

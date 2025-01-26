@@ -32,7 +32,7 @@ class AdvertModel(BaseModel):
 
     price_init = models.IntegerField()
     price = models.IntegerField()
-    currency = models.ForeignKey(CurrencyModel, on_delete=models.CASCADE, related_name='advetrs')
+    currency = models.ForeignKey(CurrencyModel, on_delete=models.CASCADE, related_name='adverts')
 
     description = models.TextField(blank=True, validators=[V.RegexValidator(RegexEnum.NAME.pattern, RegexEnum.NAME.msg),
                                                            V.MaxLengthValidator(255)])

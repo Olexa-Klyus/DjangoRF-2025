@@ -34,8 +34,6 @@ class AdvertCreateSerializer(serializers.ModelSerializer):
 class AdvertGetInfoSerializer(serializers.ModelSerializer):
     categories = CategorySerializer()
 
-    # currencies = CurrencySerializer()
-
     class Meta:
         model = AdvertModel
 

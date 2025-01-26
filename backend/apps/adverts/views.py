@@ -98,10 +98,12 @@ class AdvertGetInfoView(GenericAPIView):
         advert = self.get_object()
         user = self.request.user
 
-        # додали перегляд
+        # додали перегляд до лічильника
         visit_add(self.request, advert.id)
+
         # додали до instans лічильники
         advert.counter = get_visit_count(advert.id, user)
+
         # додали до instans середні ціни
         advert.avg_prices = get_avg_prices(advert, user)
 
