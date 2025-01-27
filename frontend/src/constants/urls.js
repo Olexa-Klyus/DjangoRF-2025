@@ -8,7 +8,7 @@ const urls = {
         login: '/auth',
         socket: `auth/socket`
     },
-
+    categories:'/auto/categories',
     auto_add: '/auto/used/autos',
     adverts: '/auto/user/autos',
     advert_info: (id) => '/auto/info/' + id,

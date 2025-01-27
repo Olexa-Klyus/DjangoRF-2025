@@ -1,10 +1,10 @@
-import {apiServiceAllowAny, apiService} from "./apiService";
+import {apiService} from "./apiService";
 import {urls} from "../constants/urls";
-import {data} from "react-router-dom";
 
 const advertService = {
-    getAll() {
-        return apiService.get(urls.adverts)
+    getAll: async () => {
+        const response = await apiService.get(urls.adverts)
+        return response.data;
     },
 
 

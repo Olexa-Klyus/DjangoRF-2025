@@ -20,7 +20,7 @@ class AdvertModel(BaseModel):
     is_visible = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
 
-    title = models.CharField(max_length=100, blank=True)
+    # title = models.CharField(max_length=100, blank=True)
 
     categories = models.ForeignKey(CategoryModel, on_delete=models.PROTECT)
     brand = models.IntegerField()
@@ -46,3 +46,6 @@ class AdvertModel(BaseModel):
     user_id = models.ForeignKey(UserModel, on_delete=models.SET_NULL, null=True)
 
     profanity_edit_count = models.IntegerField(default=0)
+
+    def title(self):
+        return self.brand + self.mark + self.year

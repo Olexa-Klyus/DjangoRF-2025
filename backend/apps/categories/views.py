@@ -10,6 +10,7 @@ from apps.categories.serializers import CategorySerializer
 class CategoryListCreateView(ListCreateAPIView):
     queryset = CategoryModel.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = (AllowAny,)
 
 
 class CategoryCreateArrayView(GenericAPIView):

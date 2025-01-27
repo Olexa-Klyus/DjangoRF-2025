@@ -1,20 +1,55 @@
 import {useForm} from "react-hook-form";
-import {advertService} from "../../services/advertService";
-
 import styles from "./AdvertFormComponent.module.css";
+import {useEffect, useState} from "react";
+import {advertService} from "../../services/advertService";
+import {categoryService} from "../../services/categoryService";
 
 const AdvertFormComponent = () => {
     const {register, handleSubmit, reset} = useForm();
 
+    const [categories, setCategories] = useState([])
+    const [selectedCategory, setSelectedCategory] = useState('Ktu')
+
+    // const getValueCategory = () => {
+    //     return currentCategory ? categories.find(cat => cat.value === 2) : '1'
+    //     // return '1'
+    // }
+
+    useEffect(() => {
+        categoryService.getAll().then(values => {
+            setCategories(values);
+        })
+    }, []);
+
+    console.log(categories)
+
+
     const save = async (advert) => {
         await advertService.create(advert)
     }
+
+
+    // console.log(getValueCategory())
+
+    const onChange = (newValue) => {
+        setSelectedCategory(newValue.value)
+        console.log(newValue.value)
+    }
+
     return (<div>
             <div>
                 <form className={styles.wrap_form} onSubmit={handleSubmit(save)}>
                     <label>Категорія
                         <input type="text" placeholder={'categories'} defaultValue={1} {...register('categories')}/>
                     </label>
+
+
+                    <select onChange={onChange}
+                            {...register('categories_select')}>
+                        {categories.map((opts, i) => <option key={i}>{opts.name}</option>)}
+                    </select>
+                    <h2>{selectedCategory}</h2>
+
                     <label>Модель авто
                         <input type="text" placeholder={'brand'} defaultValue={2} {...register('brand')}/>
                     </label>

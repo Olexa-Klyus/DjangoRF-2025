@@ -13,7 +13,7 @@ const AdvertsComponent = () => {
     const [trigger, setTrigger] = useState(null)
 
     useEffect(() => {
-        advertService.getAll().then(({data}) => setAdverts(data))
+        advertService.getAll().then((data) => setAdverts(data))
     }, [trigger]);
 
 

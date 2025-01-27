@@ -11,7 +11,6 @@ const LoginPage = () => {
 
     const onSubmit = async (user) => {
         await authService.login(user)
-        console.log(user)
         navigate('/adverts')
     }
 

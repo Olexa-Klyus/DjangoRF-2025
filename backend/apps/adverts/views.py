@@ -1,3 +1,5 @@
+from lib2to3.fixes.fix_input import context
+
 from django.contrib.auth.models import Group
 
 from rest_framework import status
@@ -30,9 +32,6 @@ class AdvertCreateView(GenericAPIView):
         data = self.request.data
         user = self.request.user
         adverts_count = self.queryset.filter(user_id=self.request.user.id).count()
-        data['price_init'] = data['price']
-        data['user_id'] = user.id
-        data['is_active'] = True
 
         if not user.profile.premium_acc and adverts_count:
             return Response(f'account is premium = {user.profile.premium_acc},'
@@ -40,19 +39,16 @@ class AdvertCreateView(GenericAPIView):
                             , status.HTTP_403_FORBIDDEN)
 
         if profanity.contains_profanity(data["description"]):
-            data["profanity_edit_count"] = 1
-            data['is_active'] = False
-
-            serializer = AdvertCreateSerializer(data=data)
+            serializer = AdvertCreateSerializer(data=data, context={'price_init': data['price']})
             serializer.is_valid(raise_exception=True)
-            serializer.save()
+            serializer.save(user_id=user, is_active=False, profanity_edit_count=1)
 
             return Response(f'Oголошення не активне, містить ненормативну лексику. Є 3 спроби на виправлення',
                             status.HTTP_403_FORBIDDEN)
 
-        serializer = AdvertCreateSerializer(data=data)
+        serializer = AdvertCreateSerializer(data=data, context={'price_init': data['price']})
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        serializer.save(user_id=user, is_active=True)
 
         return Response(serializer.data, status.HTTP_201_CREATED)
 
@@ -65,6 +61,7 @@ class AdvertUpdateView(GenericAPIView):
     def patch(self, *args, **kwargs):
         advert = self.get_object()
         data = self.request.data
+        # print(advert.title, '-----------------------------')
 
         if profanity.contains_profanity(data["description"]):
             advert.is_active = False
@@ -78,13 +75,10 @@ class AdvertUpdateView(GenericAPIView):
                 advert.is_visible = False
                 advert.save()
                 return Response(f'Oголошення заблоковане. Зверніться до адміна сайту', status.HTTP_403_FORBIDDEN)
-        else:
-            data['profanity_edit_count'] = 0
-            data['is_active'] = True
 
         serializer = AdvertUpdateSerializer(advert, data=data, partial=True)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        serializer.save(is_active=True, profanity_edit_count=0)
 
         return Response(serializer.data, status.HTTP_200_OK)
 
@@ -122,12 +116,13 @@ class AdvertGetAllView(ListAPIView):
     permission_classes = (AllowAny,)
 
 
-class AdvertGetUsersAutosView(GenericAPIView):
+class AdvertGetUserAutosView(GenericAPIView):
     queryset = AdvertModel.objects.filter(is_visible=True)
     permission_classes = (IsAuthenticated,)
     http_method_names = ['get']
 
     def get(self, *args, **kwargs):
+        print(self.request.user.email)
         adverts = self.queryset.filter(user_id=self.request.user.id)
         serializer = AdvertGetInfoSerializer(adverts, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
