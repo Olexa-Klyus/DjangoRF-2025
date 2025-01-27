@@ -8,6 +8,7 @@ import {RegisterPage} from "./pages/RegisterPage";
 import {ActivatePage} from "./pages/ActivatePage";
 import {AdvertInfoPage} from "./pages/AdvertInfoPage";
 import {AdvertFormComponent} from "./components/AdvertFormComponent/AdvertFormComponent";
+import NewPage from "./pages/NewPage";
 
 const router = createBrowserRouter([
     {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
             {path: 'adverts/add', element: <AdvertFormComponent/>},
 
 
+            {path: 'select', element: <NewPage/>},
             {path: 'chat', element: <ChatPage/>},
             {path: 'activate/:token', element: <ActivatePage/>},
 

@@ -15,6 +15,7 @@ const advertService = {
 
 
     create: async (data) => {
+        console.log(data)
         const response = await apiService.post(urls.auto_add, data)
         return response.data
     },

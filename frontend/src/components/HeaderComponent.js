@@ -9,6 +9,7 @@ const HeaderComponent = () => {
                 <Link to="/login"> LoginPage </Link>
                 <Link to="/adverts"> AdvertsPage </Link>
                 <Link to="/chat"> ChatPage </Link>
+                <Link to="/select"> NEW Select </Link>
                 <Link to="/adverts/advert_info/2"> AdvertInfoPage </Link>
             </header>
             <br/>

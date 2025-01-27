@@ -31,6 +31,7 @@ class AdvertCreateView(GenericAPIView):
     def post(self, *args, **kwargs):
         data = self.request.data
         user = self.request.user
+        print('---------------', data)
         adverts_count = self.queryset.filter(user_id=self.request.user.id).count()
 
         if not user.profile.premium_acc and adverts_count:

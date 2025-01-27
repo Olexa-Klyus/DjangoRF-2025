@@ -23,7 +23,7 @@ class AdvertCreateSerializer(serializers.ModelSerializer):
         model = AdvertModel
 
         fields = (
-            'id', 'is_active', 'user_id', 'categories', 'brand', 'mark', 'year', 'mileage',
+            'id', 'user_id', 'categories', 'brand', 'mark', 'year', 'mileage',
             'region', 'city', 'profanity_edit_count',
             'price', 'price_init', 'currency', 'description', 'gearbox', 'fuel', 'expired_at'
         )

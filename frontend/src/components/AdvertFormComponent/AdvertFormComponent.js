@@ -5,15 +5,16 @@ import {advertService} from "../../services/advertService";
 import {categoryService} from "../../services/categoryService";
 
 const AdvertFormComponent = () => {
-    const {register, handleSubmit, reset} = useForm();
+    const {register, handleSubmit, reset} = useForm({});
 
     const [categories, setCategories] = useState([])
-    const [selectedCategory, setSelectedCategory] = useState('Ktu')
+    const [selectedCategory, setSelectedCategory] = useState('Легкові')
 
-    // const getValueCategory = () => {
-    //     return currentCategory ? categories.find(cat => cat.value === 2) : '1'
-    //     // return '1'
-    // }
+    const getValueCategory = () => {
+        const res = categories.find(cat => cat.name === selectedCategory)
+        console.log(res || 1)
+        return res
+    }
 
     useEffect(() => {
         categoryService.getAll().then(values => {
@@ -21,38 +22,36 @@ const AdvertFormComponent = () => {
         })
     }, []);
 
-    console.log(categories)
-
-
     const save = async (advert) => {
+        console.log(advert)
+        advert['categories']=getValueCategory()?.value
         await advertService.create(advert)
     }
 
-
-    // console.log(getValueCategory())
-
     const onChange = (newValue) => {
-        setSelectedCategory(newValue.value)
-        console.log(newValue.value)
+        setSelectedCategory(newValue.target.value)
+        console.log(newValue.target.value)
     }
 
     return (<div>
-            <div>
-                <form className={styles.wrap_form} onSubmit={handleSubmit(save)}>
-                    <label>Категорія
-                        <input type="text" placeholder={'categories'} defaultValue={1} {...register('categories')}/>
-                    </label>
 
+            <h2>{selectedCategory}</h2>
+            <div className={styles.wrap_form} >
 
-                    <select onChange={onChange}
-                            {...register('categories_select')}>
-                        {categories.map((opts, i) => <option key={i}>{opts.name}</option>)}
+                <label>Категорія
+                    <select onChange={onChange} value={getValueCategory()?.name} name={'categories'}>
+                        {categories.map((opts) => <option key={opts.value}>{opts.name}</option>)}
                     </select>
-                    <h2>{selectedCategory}</h2>
+                </label>
+
+
+                <form className={styles.wrap_form} onSubmit={handleSubmit(save)} id={'advert'}>
 
                     <label>Модель авто
-                        <input type="text" placeholder={'brand'} defaultValue={2} {...register('brand')}/>
+                        <input type="text" placeholder={'brand'}
+                               defaultValue={1} {...register('brand')}/>
                     </label>
+
                     <input type="text" placeholder={'mark'} defaultValue={2} {...register('mark')}/>
                     <input type="text" placeholder={'year'} defaultValue={2012} {...register('year')}/>
                     <input type="text" placeholder={'mileage'} defaultValue={100000} {...register('mileage')}/>
@@ -70,6 +69,7 @@ const AdvertFormComponent = () => {
                 </form>
             </div>
         </div>
-    );
+    )
+        ;
 };
 export {AdvertFormComponent};
