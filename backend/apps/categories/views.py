@@ -1,16 +1,16 @@
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, GenericAPIView, ListCreateAPIView
-from rest_framework.permissions import AllowAny
+from rest_framework.generics import ListCreateAPIView
 from rest_framework.response import Response
 
 from apps.categories.models import CategoryModel
 from apps.categories.serializers import CategorySerializer
+from apps.user.permissions import IsAdminOrReadOnly
 
 
 class CategoryListCreateView(ListCreateAPIView):
     queryset = CategoryModel.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAdminOrReadOnly,)
 
     def post(self, *args, **kwargs):
         data = self.request.data

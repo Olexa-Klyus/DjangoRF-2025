@@ -12,3 +12,4 @@ class CarMarkSerializer(serializers.ModelSerializer):
         fields = (
             'category', 'name', 'value'
         )
+        read_only_fields = ('category',)

@@ -4,6 +4,7 @@ import {urls} from "../constants/urls";
 const advertService = {
     getAll: async () => {
         const response = await apiService.get(urls.adverts)
+        console.log(response)
         return response.data;
     },
 

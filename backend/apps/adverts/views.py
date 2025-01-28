@@ -110,7 +110,7 @@ class AdvertGetInfoView(GenericAPIView):
 class AdvertGetAllView(ListAPIView):
     queryset = AdvertModel.objects.filter(is_active=True, is_visible=True)
     serializer_class = AdvertGetInfoSerializer
-    pagination_class = AdvertsListPagination
+    # pagination_class = AdvertsListPagination
     filterset_class = AdvertsFilters
     permission_classes = (AllowAny,)
 
@@ -118,7 +118,7 @@ class AdvertGetAllView(ListAPIView):
 class AdvertGetUserAutosView(ListAPIView):
     queryset = AdvertModel.objects.filter(is_visible=True)
     serializer_class= AdvertGetInfoSerializer
-    pagination_class = AdvertsListPagination
+    # pagination_class = AdvertsListPagination
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):

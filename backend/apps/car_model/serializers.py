@@ -8,5 +8,6 @@ class CarModelSerializer(serializers.ModelSerializer):
         model = CarModelModel
 
         fields = (
-            'name', 'value'
+            'car_mark','name', 'value'
         )
+        read_only_fields = ('car_mark',)

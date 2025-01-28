@@ -7,7 +7,7 @@ urlpatterns = [
     path('api/auto', include('apps.categories.urls')),
     path('api/auto', include('apps.auto_salon.urls')),
     path('api/auto', include('apps.car_mark.urls')),
-    # path('api/auto', include('apps.car_model.urls')),
+    path('api/auto', include('apps.car_model.urls')),
 
     path('api/auto', include('apps.currency.urls')),
     path('api/auth', include('apps.auth.urls')),
