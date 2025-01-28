@@ -115,16 +115,16 @@ class AdvertGetAllView(ListAPIView):
     permission_classes = (AllowAny,)
 
 
-class AdvertGetUserAutosView(GenericAPIView):
+class AdvertGetUserAutosView(ListAPIView):
     queryset = AdvertModel.objects.filter(is_visible=True)
+    serializer_class= AdvertGetInfoSerializer
+    pagination_class = AdvertsListPagination
     permission_classes = (IsAuthenticated,)
-    http_method_names = ['get']
 
-    def get(self, *args, **kwargs):
-        print(self.request.user.email)
-        adverts = self.queryset.filter(user_id=self.request.user.id)
-        serializer = AdvertGetInfoSerializer(adverts, many=True)
-        return Response(serializer.data, status.HTTP_200_OK)
+    def get_queryset(self):
+        queryset = self.queryset.filter(user_id=self.request.user.id)
+        return queryset
+
 
 
 class AdvertAddPhotoView(UpdateAPIView):
