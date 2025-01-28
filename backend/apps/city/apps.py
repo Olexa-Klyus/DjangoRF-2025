@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class MarkConfig(AppConfig):
+class CityConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'apps.mark'
+    name = 'apps.city'

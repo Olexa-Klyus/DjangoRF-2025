@@ -8,5 +8,5 @@ class CarModelSerializer(serializers.ModelSerializer):
         model = CarModelModel
 
         fields = (
-            'name', 'value', 'parent_id', 'category_id'
+            'name', 'value'
         )

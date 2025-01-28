@@ -1,8 +1,8 @@
 from django.urls import path
 
-from .views import CarModelCreateArrayView, CarModelListCreateView
+from .views import CarModelListCreateView
 
 urlpatterns = [
-    path('/categories/<int:pk>/brands', CarModelListCreateView.as_view()),
-    path('/car_models/array', CarModelCreateArrayView.as_view()),
+    path('/categories/<int:pk>/marks/<int:pk>/models', CarModelListCreateView.as_view()),
+
 ]

@@ -1,6 +1,6 @@
 from django.db import models
 
-from apps.categories.models import CategoryModel
+from apps.car_mark.models import CarMarkModel
 
 
 class CarModelModel(models.Model):
@@ -9,5 +9,5 @@ class CarModelModel(models.Model):
 
     name = models.CharField(max_length=50)
     value = models.IntegerField()
-    parent_id = models.IntegerField(null=True)
-    category = models.ForeignKey(CategoryModel, on_delete=models.CASCADE, related_name='brands')
+
+    car_mark = models.ForeignKey(CarMarkModel, on_delete=models.SET_DEFAULT, default=1, related_name='car_models')

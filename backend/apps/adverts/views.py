@@ -1,5 +1,3 @@
-from lib2to3.fixes.fix_input import context
-
 from django.contrib.auth.models import Group
 
 from rest_framework import status

@@ -10,6 +10,15 @@ class CurrencySerializer(serializers.ModelSerializer):
         fields = (
             'name', 'saleRate', 'purchaseRate'
         )
+        read_only_fields = ('name', 'saleRate', 'purchaseRate')
+
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
+
+        attrs['name'] = self.context['name']
+        attrs['saleRate'] = self.context['saleRate']
+        attrs['purchaseRate'] = self.context['purchaseRate']
+        return attrs
 
 
 class CurrencyPointSerializer(serializers.ModelSerializer):

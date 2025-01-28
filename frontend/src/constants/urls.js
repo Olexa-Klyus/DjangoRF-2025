@@ -13,7 +13,7 @@ const urls = {
     auto_add: '/auto/used/autos',
 
     categories: '/auto/categories',
-    brands: (id) => `/auto/categories/${id}/brands`,
+    brands: (id) => `/auto/categories/${id}/marks`,
 
     point_update: (ccy) => '/auto/currency_point_add/' + ccy,
 }

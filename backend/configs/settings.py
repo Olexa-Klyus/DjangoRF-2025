@@ -47,13 +47,19 @@ INSTALLED_APPS = [
     'core',
     'apps.user',
     'apps.auth',
-    'apps.categories',
     'apps.adverts',
-    'apps.car_model',
-    'apps.mark',
     'apps.auto_salon',
+
+    'apps.categories',
+    'apps.car_mark',
+    'apps.car_model',
+
     'apps.chat',
     'apps.currency',
+
+    'apps.region',
+    'apps.city',
+
     'apps.visits_count',
 ]
 

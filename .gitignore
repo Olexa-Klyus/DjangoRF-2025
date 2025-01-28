@@ -4,16 +4,19 @@ mysql
 .env
 /poetry.lock
 
+/apps/user/migrations/*
 /apps/adverts/migrations/*
 /apps/auto_salon/migrations/*
 
-/apps/car_model/migrations/*
 /apps/categories/migrations/*
-/apps/auto_salon/chat/*
+/apps/car_mark/migrations/*
+/apps/car_model/migrations/*
 
+/apps/chat/migrations/*
 /apps/currency/migrations/*
-/apps/mark/migrations/*
 
-/apps/user/migrations/*
-/apps/visits_count/*
+/apps/currency/region/*
+/apps/currency/city/*
+
+/apps/visits_count/migrations/*
 

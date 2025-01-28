@@ -7,6 +7,8 @@ from core.models import BaseModel
 from core.services.file_service import upload_advert_photo
 
 from apps.auto_salon.models import AutoSalonModel
+from apps.car_mark.models import CarMarkModel
+from apps.car_model.models import CarModelModel
 from apps.categories.models import CategoryModel
 from apps.currency.models import CurrencyModel
 
@@ -20,11 +22,10 @@ class AdvertModel(BaseModel):
     is_visible = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
 
-    # title = models.CharField(max_length=100, blank=True)
+    categories = models.ForeignKey(CategoryModel, on_delete=models.SET_NULL, null=True)
+    car_mark = models.ForeignKey(CarMarkModel, on_delete=models.SET_NULL, null=True)
+    car_model = models.ForeignKey(CarModelModel, on_delete=models.SET_NULL, null=True)
 
-    categories = models.ForeignKey(CategoryModel, on_delete=models.PROTECT)
-    brand = models.IntegerField()
-    mark = models.IntegerField()
     year = models.IntegerField(validators=[V.MinValueValidator(1900), V.MaxValueValidator(2025)])
     mileage = models.FloatField()
     region = models.IntegerField()
@@ -32,7 +33,7 @@ class AdvertModel(BaseModel):
 
     price_init = models.IntegerField()
     price = models.IntegerField()
-    currency = models.ForeignKey(CurrencyModel, on_delete=models.CASCADE, related_name='adverts')
+    currency = models.ForeignKey(CurrencyModel, on_delete=models.SET_DEFAULT, default=1, related_name='adverts')
 
     description = models.TextField(blank=True, validators=[V.RegexValidator(RegexEnum.NAME.pattern, RegexEnum.NAME.msg),
                                                            V.MaxLengthValidator(255)])
@@ -48,4 +49,4 @@ class AdvertModel(BaseModel):
     profanity_edit_count = models.IntegerField(default=0)
 
     def title(self):
-        return self.brand + self.mark + self.year
+        return self.car_mark.name + self.car_model.name + str(self.year)

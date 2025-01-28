@@ -1,6 +1,5 @@
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import CreateModelMixin
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
@@ -10,16 +9,15 @@ from apps.currency.serializers import CurrencyPointSerializer, CurrencySerialize
 
 class CurrencyPointCreateView(GenericAPIView):
     queryset = CurrencyModel.objects.all()
+    serializer_class = CurrencySerializer
     permission_classes = (AllowAny,)
 
     def post(self, *args, **kwargs):
         data = self.request.data
 
-        data['name'] = data['ccy']
-        data['saleRate'] = data['buy']
-        data['purchaseRate'] = data['sale']
-
-        serializer = CurrencySerializer(data=data)
+        serializer = CurrencySerializer(
+            data=data, context={"name": data["ccy"], "saleRate": data["buy"], "purchaseRate": data["sale"]}
+        )
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status.HTTP_201_CREATED)
@@ -44,7 +42,7 @@ class CurrencyPointUpdateView(GenericAPIView):
         serializer.save()
 
         data['currency'] = currency_obj.id
-        self._add_currency_poit_to_arj()
+        # self._add_currency_poit_to_arj()
 
         return Response(serializer.data, status.HTTP_200_OK)
 

@@ -12,18 +12,11 @@ class CategoryListCreateView(ListCreateAPIView):
     serializer_class = CategorySerializer
     permission_classes = (AllowAny,)
 
-
-class CategoryCreateArrayView(GenericAPIView):
-    queryset = CategoryModel.objects.all()
-    permission_classes = (AllowAny,)
-
     def post(self, *args, **kwargs):
         data = self.request.data
-        arr = []
-        for item in data:
-            serializer = CategorySerializer(data=item)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            arr.append(serializer.data)
 
-        return Response(arr, status.HTTP_200_OK)
+        serializer = CategorySerializer(data=data, many=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data, status.HTTP_200_OK)
