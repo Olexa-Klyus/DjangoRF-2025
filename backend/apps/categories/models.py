@@ -7,3 +7,6 @@ class CategoryModel(models.Model):
 
     name = models.CharField(max_length=50)
     value = models.IntegerField()
+
+
+

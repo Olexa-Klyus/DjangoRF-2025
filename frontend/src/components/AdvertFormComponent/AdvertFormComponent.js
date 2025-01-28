@@ -2,56 +2,63 @@ import {useForm} from "react-hook-form";
 import styles from "./AdvertFormComponent.module.css";
 import {useEffect, useState} from "react";
 import {advertService} from "../../services/advertService";
-import {categoryService} from "../../services/categoryService";
+import {brandService, categoryService} from "../../services/categoryService";
 
 const AdvertFormComponent = () => {
     const {register, handleSubmit, reset} = useForm({});
 
-    const [categories, setCategories] = useState([])
+    const [categories, setCategories] = useState([{name: 'Легкові', value: 1}])
     const [selectedCategory, setSelectedCategory] = useState('Легкові')
-
-    const getValueCategory = () => {
-        const res = categories.find(cat => cat.name === selectedCategory)
-        console.log(res || 1)
-        return res
-    }
-
+    const getValueCategory = () => categories.find(cat => cat.name === selectedCategory)
+    const onChangeCategory = (e) => setSelectedCategory(e.target.value)
     useEffect(() => {
         categoryService.getAll().then(values => {
-            setCategories(values);
+            setCategories(values)
         })
     }, []);
 
+
+    const [brands, setBrands] = useState([])
+    const [selectedBrand, setSelectedBrand] = useState('')
+    const getValueBrand = () => brands.find(brand => brand.name === selectedBrand)
+    const onChangeBrand = (e) => setSelectedBrand(e.target.value)
+    useEffect(() => {
+        if (selectedCategory) {
+            brandService.getById(getValueCategory()?.value).then(values => {
+                setBrands(values)
+            })
+        }
+    }, [selectedCategory]);
+
+
     const save = async (advert) => {
         console.log(advert)
-        advert['categories']=getValueCategory()?.value
+        advert['categories'] = getValueCategory()?.value
+        advert['brand'] = getValueBrand()?.value
         await advertService.create(advert)
     }
 
-    const onChange = (newValue) => {
-        setSelectedCategory(newValue.target.value)
-        console.log(newValue.target.value)
-    }
 
     return (<div>
 
             <h2>{selectedCategory}</h2>
-            <div className={styles.wrap_form} >
+            <h2>{selectedBrand}</h2>
+            <div className={styles.wrap_form}>
 
                 <label>Категорія
-                    <select onChange={onChange} value={getValueCategory()?.name} name={'categories'}>
-                        {categories.map((opts) => <option key={opts.value}>{opts.name}</option>)}
+                    <select onChange={onChangeCategory} value={getValueCategory()?.name}>
+                        {categories.map((opts, i) => <option key={i}>{opts.name}</option>)}
+                    </select>
+                </label>
+
+                <label>Модель авто
+                    <select onChange={onChangeBrand} value={getValueBrand()?.name}>
+                        {brands.map((opts, i) => <option key={i}>{opts.name}</option>)}
                     </select>
                 </label>
 
 
                 <form className={styles.wrap_form} onSubmit={handleSubmit(save)} id={'advert'}>
-
-                    <label>Модель авто
-                        <input type="text" placeholder={'brand'}
-                               defaultValue={1} {...register('brand')}/>
-                    </label>
-
                     <input type="text" placeholder={'mark'} defaultValue={2} {...register('mark')}/>
                     <input type="text" placeholder={'year'} defaultValue={2012} {...register('year')}/>
                     <input type="text" placeholder={'mileage'} defaultValue={100000} {...register('mileage')}/>

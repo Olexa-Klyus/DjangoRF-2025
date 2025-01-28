@@ -8,10 +8,13 @@ const urls = {
         login: '/auth',
         socket: `auth/socket`
     },
-    categories:'/auto/categories',
-    auto_add: '/auto/used/autos',
     adverts: '/auto/user/autos',
-    advert_info: (id) => '/auto/info/' + id,
+    advert_info: (id) => `/auto/info/${id}`,
+    auto_add: '/auto/used/autos',
+
+    categories: '/auto/categories',
+    brands: (id) => `/auto/categories/${id}/brands`,
+
     point_update: (ccy) => '/auto/currency_point_add/' + ccy,
 }
 
