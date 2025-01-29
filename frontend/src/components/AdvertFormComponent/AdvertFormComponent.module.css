@@ -1,7 +1,15 @@
-.wrap_form {
+.form_wrap {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin: 10px;
+}
+
+.label_wrap {
+
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+    background:cornflowerblue;
 }

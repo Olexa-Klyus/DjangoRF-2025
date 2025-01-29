@@ -21,7 +21,7 @@ const AdvertFormComponent = () => {
     const [marks, setMarks] = useState([])
     const [selectedMark, setSelectedMark] = useState('')
     const getValueMark = () => marks.find(mark => mark.name === selectedMark)
-    const onChangeBrand = (e) => setSelectedMark(e.target.value)
+    const onChangeMark = (e) => setSelectedMark(e.target.value)
     useEffect(() => {
         if (selectedCategory) {
             console.log(getValueCategory())
@@ -31,6 +31,21 @@ const AdvertFormComponent = () => {
             })
         }
     }, [selectedCategory]);
+
+    const [models, setModels] = useState([])
+    const [selectedModel, setSelectedModel] = useState('')
+    const getValueModel = () => models.find(model => model.name === selectedModel)
+    const onChangeModel = (e) => setSelectedModel(e.target.value)
+    useEffect(() => {
+        if (selectedCategory) {
+            console.log(getValueCategory())
+            markService.getById(getValueCategory()?.value).then(values => {
+                setMarks(values)
+                console.log(values)
+            })
+        }
+    }, [selectedCategory]);
+
 
 
     const save = async (advert) => {
@@ -45,22 +60,27 @@ const AdvertFormComponent = () => {
 
             <h2>{selectedCategory}</h2>
             <h2>{selectedMark}</h2>
-            <div className={styles.wrap_form}>
+            <div className={styles.form_wrap}>
 
-                <label>Категорія
+                <label className={styles.label_wrap}>Категорія
                     <select onChange={onChangeCategory} value={getValueCategory()?.name}>
                         {categories.map((opts, i) => <option key={i}>{opts.name}</option>)}
                     </select>
                 </label>
 
-                <label>Марка авто
-                    <select onChange={onChangeBrand} value={getValueMark()?.name}>
+                <label className={styles.label_wrap}>Марка авто
+                    <select onChange={onChangeMark} value={getValueMark()?.name}>
                         {marks.map((opts, i) => <option key={i}>{opts.name}</option>)}
                     </select>
                 </label>
 
+                <label className={styles.label_wrap}>Модель авто
+                    <select onChange={onChangeModel} value={getValueModel()?.name}>
+                        {models.map((opts, i) => <option key={i}>{opts.name}</option>)}
+                    </select>
+                </label>
 
-                <form className={styles.wrap_form} onSubmit={handleSubmit(save)} id={'advert'}>
+                <form className={styles.form_wrap} onSubmit={handleSubmit(save)} id={'advert'}>
                     <input type="text" placeholder={'car_model'} defaultValue={2} {...register('car_model')}/>
                     <input type="text" placeholder={'year'} defaultValue={2012} {...register('year')}/>
                     <input type="text" placeholder={'mileage'} defaultValue={100000} {...register('mileage')}/>

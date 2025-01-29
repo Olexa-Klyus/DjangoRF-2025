@@ -1,5 +1,3 @@
-from lib2to3.fixes.fix_input import context
-
 from django.contrib.auth.models import Group
 from django.shortcuts import get_object_or_404
 
@@ -9,6 +7,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
 from better_profanity import profanity
+from guardian.models.models import UserObjectPermission
 
 from core.pagination import AdvertsListPagination
 
@@ -130,9 +129,21 @@ class AdvertGetUserAutosView(ListAPIView):
     pagination_class = AdvertsListPagination
     permission_classes = (IsAuthenticated,)
 
-    def get_queryset(self):
-        queryset = self.queryset.filter(user_id=self.request.user.id)
-        return queryset
+    # def get_queryset(self):
+    #     queryset = self.queryset.filter(user_id=self.request.user.id)
+    #
+    #     user = self.request.user
+    #     obj_perm = UserObjectPermission.objects.assign_perm(user_or_group=user, perm='change_advertmodel',
+    #                                                         obj=(AdvertModel.objects.get(id=25)))
+    #
+    #     if user.has_perm('change_advertmodel', obj=(AdvertModel.objects.get(id=25))):
+    #         print(f'{user.profile.name} has permission change_group {AdvertModel.objects.get(id=25)}')
+    #     else:
+    #         print('RFHGJBKJNLKJ:J:JL:JI')
+    #
+    #     # print(obj_perm)
+    #
+    #     return queryset
 
 
 class AdvertAddPhotoView(UpdateAPIView):
@@ -150,7 +161,6 @@ class AdvertAddAutoSalonView(UpdateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-
         # obj_perm = UserObjectPermission.objects.assign_perm('change_group', user, obj=group2)
 
         group1 = Group.objects.get(name='salon Mazda')
