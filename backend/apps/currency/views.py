@@ -3,8 +3,8 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from apps.currency.models import CurrencyModel
-from apps.currency.serializers import CurrencyPointSerializer, CurrencySerializer
+from apps.currency.models import CurrencyModel, CurrencyPointModel
+from apps.currency.serializers import CurrencySerializer
 
 
 class CurrencyPointCreateView(GenericAPIView):
@@ -14,10 +14,9 @@ class CurrencyPointCreateView(GenericAPIView):
 
     def post(self, *args, **kwargs):
         data = self.request.data
+        context_ = {"name": data["ccy"], "saleRate": data["buy"], "purchaseRate": data["sale"]}
 
-        serializer = CurrencySerializer(
-            data=data, context={"name": data["ccy"], "saleRate": data["buy"], "purchaseRate": data["sale"]}
-        )
+        serializer = CurrencySerializer(data=data, context=context_)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status.HTTP_201_CREATED)
@@ -32,24 +31,15 @@ class CurrencyPointUpdateView(GenericAPIView):
     def patch(self, *args, **kwargs):
         data = self.request.data
         currency_obj = self.get_object()
+        context_ = {"name": data["ccy"], "saleRate": data["buy"], "purchaseRate": data["sale"]}
 
-        data['name'] = currency_obj.name
-        data['saleRate'] = data['buy']
-        data['purchaseRate'] = data['sale']
-
-        serializer = CurrencySerializer(currency_obj, data=data)
+        serializer = CurrencySerializer(currency_obj, data=data, context=context_)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        data['currency'] = currency_obj.id
-        # self._add_currency_poit_to_arj()
+        CurrencyPointModel.objects.create(currency=CurrencyModel.objects.get(name=serializer.data['name']),
+                                          saleRate=serializer.data['saleRate'],
+                                          purchaseRate=serializer.data['purchaseRate'],
+                                          )
 
         return Response(serializer.data, status.HTTP_200_OK)
-
-    def _add_currency_poit_to_arj(self):
-        data = self.request.data
-
-        serializer = CurrencyPointSerializer(data=data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return 'point is add'

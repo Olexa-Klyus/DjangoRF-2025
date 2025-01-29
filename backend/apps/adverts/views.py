@@ -1,4 +1,7 @@
+from lib2to3.fixes.fix_input import context
+
 from django.contrib.auth.models import Group
+from django.shortcuts import get_object_or_404
 
 from rest_framework import status
 from rest_framework.generics import GenericAPIView, ListAPIView, UpdateAPIView
@@ -19,6 +22,7 @@ from apps.adverts.serializers import (
     AdvertUpdateSerializer,
 )
 from apps.adverts.services import get_avg_prices
+from apps.car_mark.models import CarMarkModel
 from apps.visits_count.services import get_visit_count, visit_add
 
 
@@ -29,7 +33,13 @@ class AdvertCreateView(GenericAPIView):
     def post(self, *args, **kwargs):
         data = self.request.data
         user = self.request.user
-        print('---------------', data)
+
+        context_ = {'price_init': data['price']}
+
+        if 'car_mark' in data:
+            mark_obj = get_object_or_404(CarMarkModel, value=data['car_mark'])
+            context_['car_mark'] = mark_obj
+
         adverts_count = self.queryset.filter(user_id=self.request.user.id).count()
 
         if not user.profile.premium_acc and adverts_count:
@@ -38,14 +48,14 @@ class AdvertCreateView(GenericAPIView):
                             , status.HTTP_403_FORBIDDEN)
 
         if profanity.contains_profanity(data["description"]):
-            serializer = AdvertCreateSerializer(data=data, context={'price_init': data['price']})
+            serializer = AdvertCreateSerializer(data=data, context=context_)
             serializer.is_valid(raise_exception=True)
             serializer.save(user_id=user, is_active=False, profanity_edit_count=1)
 
             return Response(f'Oголошення не активне, містить ненормативну лексику. Є 3 спроби на виправлення',
                             status.HTTP_403_FORBIDDEN)
 
-        serializer = AdvertCreateSerializer(data=data, context={'price_init': data['price']})
+        serializer = AdvertCreateSerializer(data=data, context=context_)
         serializer.is_valid(raise_exception=True)
         serializer.save(user_id=user, is_active=True)
 
@@ -60,7 +70,6 @@ class AdvertUpdateView(GenericAPIView):
     def patch(self, *args, **kwargs):
         advert = self.get_object()
         data = self.request.data
-        # print(advert.title, '-----------------------------')
 
         if profanity.contains_profanity(data["description"]):
             advert.is_active = False
@@ -110,21 +119,20 @@ class AdvertGetInfoView(GenericAPIView):
 class AdvertGetAllView(ListAPIView):
     queryset = AdvertModel.objects.filter(is_active=True, is_visible=True)
     serializer_class = AdvertGetInfoSerializer
-    # pagination_class = AdvertsListPagination
+    pagination_class = AdvertsListPagination
     filterset_class = AdvertsFilters
     permission_classes = (AllowAny,)
 
 
 class AdvertGetUserAutosView(ListAPIView):
     queryset = AdvertModel.objects.filter(is_visible=True)
-    serializer_class= AdvertGetInfoSerializer
-    # pagination_class = AdvertsListPagination
+    serializer_class = AdvertGetInfoSerializer
+    pagination_class = AdvertsListPagination
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         queryset = self.queryset.filter(user_id=self.request.user.id)
         return queryset
-
 
 
 class AdvertAddPhotoView(UpdateAPIView):

@@ -7,7 +7,7 @@ const categoryService = {
         return response.data;
     }
 }
-const brandService = {
+const markService = {
     getById: async (id) => {
         const response = await apiServiceAllowAny.get(urls.brands(+id))
         return response.data;
@@ -16,5 +16,5 @@ const brandService = {
 
 
 export {
-    categoryService, brandService
+    categoryService, markService
 }

@@ -10,7 +10,7 @@ def get_avg_prices(advert, user):
     avg_prices = {}
     if hasattr(user, 'profile'):
         if user.profile.premium_acc:
-            qs = (AdvertModel.objects.filter(brand=advert.brand, mark=advert.mark)).select_related('currency').values(
+            qs = (AdvertModel.objects.filter(car_mark=advert.car_mark, car_model=advert.car_model)).select_related('currency').values(
                 'currency__saleRate', 'price').annotate(sum_as_UAH=F('currency__saleRate') * F('price'))
 
             if advert.region:

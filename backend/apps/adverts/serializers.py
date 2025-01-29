@@ -27,13 +27,15 @@ class AdvertCreateSerializer(serializers.ModelSerializer):
             'region', 'city', 'profanity_edit_count',
             'price', 'price_init', 'currency', 'description', 'gearbox', 'fuel', 'expired_at'
         )
-        read_only_fields = ('id', 'price_init', 'user_id', 'expired_at', 'profanity_edit_count',)
+        read_only_fields = ('id', 'price_init', 'car_mark', 'user_id', 'expired_at', 'profanity_edit_count',)
 
         extra_kwargs = {'is_active': {'write_only': True, }}
 
     def validate(self, attrs):
         attrs = super().validate(attrs)
         attrs['price_init'] = self.context['price_init']
+        if 'car_mark' in self.context:
+            attrs['car_mark'] = self.context['car_mark']
         return attrs
 
 

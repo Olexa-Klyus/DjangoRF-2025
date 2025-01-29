@@ -2,7 +2,7 @@ import {useForm} from "react-hook-form";
 import styles from "./AdvertFormComponent.module.css";
 import {useEffect, useState} from "react";
 import {advertService} from "../../services/advertService";
-import {brandService, categoryService} from "../../services/categoryService";
+import {categoryService, markService} from "../../services/categoryService";
 
 const AdvertFormComponent = () => {
     const {register, handleSubmit, reset} = useForm({});
@@ -18,14 +18,16 @@ const AdvertFormComponent = () => {
     }, []);
 
 
-    const [brands, setBrands] = useState([])
-    const [selectedBrand, setSelectedBrand] = useState('')
-    const getValueBrand = () => brands.find(brand => brand.name === selectedBrand)
-    const onChangeBrand = (e) => setSelectedBrand(e.target.value)
+    const [marks, setMarks] = useState([])
+    const [selectedMark, setSelectedMark] = useState('')
+    const getValueMark = () => marks.find(mark => mark.name === selectedMark)
+    const onChangeBrand = (e) => setSelectedMark(e.target.value)
     useEffect(() => {
         if (selectedCategory) {
-            brandService.getById(getValueCategory()?.value).then(values => {
-                setBrands(values)
+            console.log(getValueCategory())
+            markService.getById(getValueCategory()?.value).then(values => {
+                setMarks(values)
+                console.log(values)
             })
         }
     }, [selectedCategory]);
@@ -34,7 +36,7 @@ const AdvertFormComponent = () => {
     const save = async (advert) => {
         console.log(advert)
         advert['categories'] = getValueCategory()?.value
-        advert['brand'] = getValueBrand()?.value
+        advert['car_mark'] = getValueMark()?.value
         await advertService.create(advert)
     }
 
@@ -42,7 +44,7 @@ const AdvertFormComponent = () => {
     return (<div>
 
             <h2>{selectedCategory}</h2>
-            <h2>{selectedBrand}</h2>
+            <h2>{selectedMark}</h2>
             <div className={styles.wrap_form}>
 
                 <label>Категорія
@@ -51,15 +53,15 @@ const AdvertFormComponent = () => {
                     </select>
                 </label>
 
-                <label>Модель авто
-                    <select onChange={onChangeBrand} value={getValueBrand()?.name}>
-                        {brands.map((opts, i) => <option key={i}>{opts.name}</option>)}
+                <label>Марка авто
+                    <select onChange={onChangeBrand} value={getValueMark()?.name}>
+                        {marks.map((opts, i) => <option key={i}>{opts.name}</option>)}
                     </select>
                 </label>
 
 
                 <form className={styles.wrap_form} onSubmit={handleSubmit(save)} id={'advert'}>
-                    <input type="text" placeholder={'mark'} defaultValue={2} {...register('mark')}/>
+                    <input type="text" placeholder={'car_model'} defaultValue={2} {...register('car_model')}/>
                     <input type="text" placeholder={'year'} defaultValue={2012} {...register('year')}/>
                     <input type="text" placeholder={'mileage'} defaultValue={100000} {...register('mileage')}/>
                     <input type="text" placeholder={'region'} defaultValue={10} {...register('region')}/>
