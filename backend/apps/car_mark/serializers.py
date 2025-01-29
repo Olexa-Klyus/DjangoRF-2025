@@ -1,5 +1,3 @@
-from unicodedata import category
-
 from rest_framework import serializers
 
 from apps.car_mark.models import CarMarkModel

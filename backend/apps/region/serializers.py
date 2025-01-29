@@ -6,7 +6,4 @@ from apps.region.models import RegionModel
 class RegionSerializer(serializers.ModelSerializer):
     class Meta:
         model = RegionModel
-
-        fields = (
-            'name', 'value'
-        )
+        fields = ('name', 'value')
