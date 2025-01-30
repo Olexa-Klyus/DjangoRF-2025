@@ -1,5 +1,6 @@
 import React from 'react';
-import {AdvertInfoComponent} from "../components/AdertInfoComponent";
+import {AdvertInfoComponent} from "../components/AdvertInfoComponent/AdertInfoComponent";
+
 
 const AdvertInfoPage = () => {
     return (

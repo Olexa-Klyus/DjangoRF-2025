@@ -1,10 +1,11 @@
 import {useEffect, useState} from "react";
 import {advertService} from "../../services/advertService";
-import {AdvertComponent} from "../AdvertComponent";
+
 import {socketService} from "../../services/socketService";
 import {useNavigate} from "react-router-dom";
 
 import styles from "./AdvertsComponent.module.css";
+import {AdvertComponent} from "../AdvertComponent/AdvertComponent";
 
 const AdvertsComponent = () => {
     const navigate = useNavigate();

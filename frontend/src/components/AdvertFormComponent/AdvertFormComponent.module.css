@@ -13,3 +13,7 @@
     margin-right: 30px;
     background:cornflowerblue;
 }
+
+.selects_wrap{
+    display: flex;
+}

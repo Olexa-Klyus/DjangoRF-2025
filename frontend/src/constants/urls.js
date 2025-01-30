@@ -13,7 +13,9 @@ const urls = {
     auto_add: '/auto/used/autos',
 
     categories: '/auto/categories',
-    brands: (id) => `/auto/categories/${id}/marks`,
+    marks: (id) => `/auto/categories/${id}/marks`,
+    models: (id,pk) => `/auto/categories/${id}/marks/${pk}/models`,
+    regions: '/auto/regions',
 
     point_update: (ccy) => '/auto/currency_point_add/' + ccy,
 }

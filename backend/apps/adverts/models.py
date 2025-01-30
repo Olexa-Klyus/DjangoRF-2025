@@ -48,5 +48,7 @@ class AdvertModel(BaseModel):
 
     profanity_edit_count = models.IntegerField(default=0)
 
-    def title(self):
-        return self.car_mark.name + self.car_model.name + str(self.year)
+    def title_advert(self):
+        return (f'{(self.car_mark.name if hasattr(self.car_mark, 'name') else 'car_mark?')}'
+                f'-{self.car_model.name if hasattr(self.car_model, 'name') else 'car_model?'}'
+                f' {self.year}р.в. {self.description}')

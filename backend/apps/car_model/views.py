@@ -13,14 +13,18 @@ class CarModelListCreateView(ListCreateAPIView):
     serializer_class = CarModelSerializer
     permission_classes = (IsAdminOrReadOnly,)
 
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        queryset = CarModelModel.objects.filter(car_mark_id=pk)
+        return queryset
+
     def post(self, *args, **kwargs):
         data = self.request.data
         pk = kwargs['pk']
 
         serializer = CarModelSerializer(data=data, many=True)
         serializer.is_valid(raise_exception=True)
-        mark_obj = CarMarkModel.objects.get(pk=pk)
-        serializer.save(car_mark=mark_obj)
+        car_mark_obj = CarMarkModel.objects.get(pk=pk)
+        serializer.save(car_mark=car_mark_obj)
 
-        return Response(serializer.data, status.HTTP_200_OK)
-
+        return Response(serializer.data, status.HTTP_201_CREATED)

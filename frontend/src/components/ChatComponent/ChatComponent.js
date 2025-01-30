@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from "react";
-import {socketService} from "../services/socketService";
+
 import {client} from "websocket";
+import {socketService} from "../../services/socketService";
 
 
 const ChatComponent = () => {

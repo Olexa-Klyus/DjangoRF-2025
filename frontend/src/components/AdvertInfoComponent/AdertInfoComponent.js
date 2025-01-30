@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
-import {advertService} from "../services/advertService";
+
 import {useParams} from "react-router-dom";
+import {advertService} from "../../services/advertService";
 
 const privatBankAPI = 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5'
 

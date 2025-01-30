@@ -1,7 +1,5 @@
-from unicodedata import category
-
 from rest_framework import status
-from rest_framework.generics import GenericAPIView, ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView
 from rest_framework.response import Response
 
 from apps.car_mark.models import CarMarkModel

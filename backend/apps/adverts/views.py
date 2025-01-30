@@ -22,6 +22,7 @@ from apps.adverts.serializers import (
 )
 from apps.adverts.services import get_avg_prices
 from apps.car_mark.models import CarMarkModel
+from apps.car_model.models import CarModelModel
 from apps.visits_count.services import get_visit_count, visit_add
 
 
@@ -39,6 +40,12 @@ class AdvertCreateView(GenericAPIView):
             mark_obj = get_object_or_404(CarMarkModel, value=data['car_mark'])
             context_['car_mark'] = mark_obj
 
+        if 'car_model' in data:
+            model_obj = get_object_or_404(CarModelModel, value=data['car_model'])
+            context_['car_model'] = model_obj
+
+        print('data--------------',data)
+        print('context_--------------',context_)
         adverts_count = self.queryset.filter(user_id=self.request.user.id).count()
 
         if not user.profile.premium_acc and adverts_count:

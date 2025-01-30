@@ -19,15 +19,18 @@ class AdvertUpdateSerializer(serializers.ModelSerializer):
 
 
 class AdvertCreateSerializer(serializers.ModelSerializer):
+    title = serializers.CharField(source='title_advert', read_only=True)
+
     class Meta:
         model = AdvertModel
 
         fields = (
-            'id', 'user_id', 'categories', 'car_mark', 'car_model', 'year', 'mileage',
+            'id', 'user_id', 'title', 'categories', 'car_mark', 'car_model', 'year', 'mileage',
             'region', 'city', 'profanity_edit_count',
             'price', 'price_init', 'currency', 'description', 'gearbox', 'fuel', 'expired_at'
         )
-        read_only_fields = ('id', 'price_init', 'car_mark', 'user_id', 'expired_at', 'profanity_edit_count',)
+        read_only_fields = (
+            'id', 'price_init', 'car_mark', 'car_model', 'user_id', 'expired_at', 'profanity_edit_count',)
 
         extra_kwargs = {'is_active': {'write_only': True, }}
 
@@ -36,6 +39,8 @@ class AdvertCreateSerializer(serializers.ModelSerializer):
         attrs['price_init'] = self.context['price_init']
         if 'car_mark' in self.context:
             attrs['car_mark'] = self.context['car_mark']
+        if 'car_model' in self.context:
+            attrs['car_model'] = self.context['car_model']
         return attrs
 
 
