@@ -14,8 +14,10 @@ const urls = {
 
     categories: '/auto/categories',
     marks: (id) => `/auto/categories/${id}/marks`,
-    models: (id,pk) => `/auto/categories/${id}/marks/${pk}/models`,
+    models: (id, pk) => `/auto/categories/${id}/marks/${pk}/models`,
     regions: '/auto/regions',
+    cities: (id) => `/auto/regions/${id}/cities`,
+    currency: `/auto/currency_points`,
 
     point_update: (ccy) => '/auto/currency_point_add/' + ccy,
 }

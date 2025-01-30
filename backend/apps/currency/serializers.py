@@ -6,7 +6,7 @@ from apps.currency.models import CurrencyModel, CurrencyPointModel
 class CurrencySerializer(serializers.ModelSerializer):
     class Meta:
         model = CurrencyModel
-        fields = ('name', 'saleRate', 'purchaseRate')
+        fields = ('name', 'saleRate', 'purchaseRate','value')
         read_only_fields = ('name', 'saleRate', 'purchaseRate')
 
     def validate(self, attrs):

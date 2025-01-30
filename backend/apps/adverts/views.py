@@ -1,4 +1,5 @@
 from django.contrib.auth.models import Group
+from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
 
 from rest_framework import status
@@ -21,6 +22,7 @@ from apps.adverts.serializers import (
     AdvertUpdateSerializer,
 )
 from apps.adverts.services import get_avg_prices
+from apps.auto_salon.models import AutoSalonModel
 from apps.car_mark.models import CarMarkModel
 from apps.car_model.models import CarModelModel
 from apps.visits_count.services import get_visit_count, visit_add
@@ -44,8 +46,8 @@ class AdvertCreateView(GenericAPIView):
             model_obj = get_object_or_404(CarModelModel, value=data['car_model'])
             context_['car_model'] = model_obj
 
-        print('data--------------',data)
-        print('context_--------------',context_)
+        print('data--------------', data)
+        print('context_--------------', context_)
         adverts_count = self.queryset.filter(user_id=self.request.user.id).count()
 
         if not user.profile.premium_acc and adverts_count:
@@ -165,48 +167,67 @@ class AdvertAddPhotoView(UpdateAPIView):
 
 
 class AdvertAddAutoSalonView(UpdateAPIView):
+    queryset = AdvertModel.objects.filter(is_active=True, is_visible=True)
+    permission_classes = (AllowAny,)
+    serializer_class = AdvertAutoSalonSerializer
 
     def get_queryset(self):
         user = self.request.user
         # obj_perm = UserObjectPermission.objects.assign_perm('change_group', user, obj=group2)
 
-        group1 = Group.objects.get(name='salon Mazda')
-        group2 = Group.objects.get(name='salon Mazda2')
+        # group1 = Group.objects.get(name='salon Mazda')
+        # group2 = Group.objects.get(name='salon Mazda2')
+        if user.has_perm(80):
+            print(f'{user.profile.name} has permission 80')
 
-        if user.has_perm('change_group', group2):
-            print(f'{user.profile.name} has permission change_group {group2.name}')
-        else:
-            print(f'{user.profile.name} has not permission change_group {group2.name}')
+        print(user.user_permissions.all())
+        print(user.groups.all())
+        print(user.get_group_permissions())
+        content_type=ContentType.objects.get_for_model(AutoSalonModel)
 
-        if user.has_perm('change_group', group1):
-            print(f'{user.profile.name} has permission change_group {group1.name}')
-        else:
-            print(f'{user.profile.name} has not permission change_group {group1.name}')
+        # if user.has_group_permissions(80):
+        #     print(f'{user.profile.name} has permission 80')
+        # print(user.group_permissions.all())
+        
+        group = Group.objects.get_or_create(name='salon Mazda2')
 
-        if user.has_perm('change_group'):
-            print(f'{user.profile.name} has permission change_group all groups')
-        else:
-            print(f'{user.profile.name} has not permission change_group all groups')
+        group.permissions.add(25, 26, 27, 28)
+        # print(group.permissions.all())
 
-        # # group = Group.objects.create(name='salon Mazda2')
-        # group = Group.objects.get(name='salon Mazda2')
-        #
-        # group.permissions.add(25, 26, 27, 28)
-        # # print(group.permissions.all())
-        #
-        # user.groups.add(group)
-        # if user.has_perm('advertmodel.change_advertmodel'):
-        #     print('has permission!!!')
-
-        # user.user_permissions.add(41, 42, 43, 44)
-        # print(user.user_permissions.all())
-        # if user.has_perm('auto_salon.add_autosalonmodel'):
-        #     print('has permission!!!')
+        user.groups.add(group)
+        if user.has_perm('advertmodel.change_advertmodel'):
+            print('has permission!!!')
 
         return AdvertModel.objects.all()
-        # return AdvertModel.objects.filter(user_id=self.request.user.id)
 
-    permission_classes = (AllowAny,)
-    serializer_class = AdvertAutoSalonSerializer
+    # if user.has_perm('change_group', group2):
+    #     print(f'{user.profile.name} has permission change_group {group2.name}')
+    # else:
+    #     print(f'{user.profile.name} has not permission change_group {group2.name}')
+    #
+    # if user.has_perm('change_group', group1):
+    #     print(f'{user.profile.name} has permission change_group {group1.name}')
+    # else:
+    #     print(f'{user.profile.name} has not permission change_group {group1.name}')
+    #
+    # if user.has_perm('change_group'):
+    #     print(f'{user.profile.name} has permission change_group all groups')
+    # else:
+    #     print(f'{user.profile.name} has not permission change_group all groups')
 
-    http_method_names = ['patch']
+    # # group = Group.objects.create(name='salon Mazda2')
+    # group = Group.objects.get(name='salon Mazda2')
+    #
+    # group.permissions.add(25, 26, 27, 28)
+    # # print(group.permissions.all())
+    #
+    # user.groups.add(group)
+    # if user.has_perm('advertmodel.change_advertmodel'):
+    #     print('has permission!!!')
+
+    # user.user_permissions.add(41, 42, 43, 44)
+    # print(user.user_permissions.all())
+    # if user.has_perm('auto_salon.add_autosalonmodel'):
+    #     print('has permission!!!')
+
+    # return AdvertModel.objects.filter(user_id=self.request.user.id)

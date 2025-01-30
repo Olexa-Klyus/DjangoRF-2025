@@ -7,6 +7,7 @@ class CurrencyModel(models.Model):
         ordering = ['id']
 
     name = models.CharField(max_length=5)
+    value= models.IntegerField(default=1)
     desc = models.CharField(max_length=20, blank=True)
 
     saleRate = models.DecimalField(decimal_places=7, max_digits=12, default=1)

@@ -1,16 +1,17 @@
 from rest_framework import status
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, ListCreateAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from apps.currency.models import CurrencyModel, CurrencyPointModel
 from apps.currency.serializers import CurrencySerializer
+from apps.user.permissions import IsAdminOrReadOnly
 
 
-class CurrencyPointCreateView(GenericAPIView):
+class CurrencyPointListCreateView(ListCreateAPIView):
     queryset = CurrencyModel.objects.all()
     serializer_class = CurrencySerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAdminOrReadOnly,)
 
     def post(self, *args, **kwargs):
         data = self.request.data

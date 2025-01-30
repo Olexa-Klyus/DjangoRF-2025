@@ -25,7 +25,20 @@ const regionService = {
         return response.data;
     }
 }
+const cityService = {
+    getById: async (id) => {
+        const response = await apiServiceAllowAny.get(urls.cities(+id))
+        return response.data;
+    }
+}
+const currencyService = {
+    getAll: async () => {
+        const response = await apiServiceAllowAny.get(urls.currency)
+        return response.data;
+    }
+}
+
 
 export {
-    categoryService, markService, modelService,regionService
+    categoryService, markService, modelService, regionService, cityService, currencyService
 }

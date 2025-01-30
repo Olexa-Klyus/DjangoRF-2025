@@ -13,6 +13,11 @@ class CityListCreateView(ListCreateAPIView):
     serializer_class = CitySerializer
     permission_classes = (IsAdminOrReadOnly,)
 
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        queryset = CityModel.objects.filter(region_id=pk)
+        return queryset
+
     def post(self, *args, **kwargs):
         data = self.request.data
         pk = kwargs['pk']
@@ -22,4 +27,4 @@ class CityListCreateView(ListCreateAPIView):
         region_obj = RegionModel.objects.get(pk=pk)
         serializer.save(region=region_obj)
 
-        return Response(serializer.data, status.HTTP_200_OK)
+        return Response(serializer.data, status.HTTP_201_CREATED)
