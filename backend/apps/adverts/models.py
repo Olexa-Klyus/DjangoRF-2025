@@ -1,11 +1,11 @@
 from django.core import validators as V
 from django.db import models
 
-from apps.auto_salon.models import AutoSalonModel
 from core.enums import RegexEnum
 from core.models import BaseModel
 from core.services.file_service import upload_advert_photo
 
+from apps.auto_salon.models import AutoSalonModel
 from apps.categories.models import CategoryModel
 
 
