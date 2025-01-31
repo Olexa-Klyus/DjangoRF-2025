@@ -12,9 +12,10 @@ const AdvertInfoComponent = () => {
     const [points, setPoints] = useState(null)
 
 
+
     useEffect(() => {
 
-        advertService.getById(id).then((data) => {
+        advertService.getInfo(id).then((data) => {
             setAdvert(data);
             if (!data["point_is_actual"]) {
                 setTrigger(prevState => !prevState);

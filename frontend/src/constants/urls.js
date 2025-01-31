@@ -9,8 +9,10 @@ const urls = {
         socket: `auth/socket`
     },
     adverts: '/auto/user/autos',
+
     advert_info: (id) => `/auto/info/${id}`,
     auto_add: '/auto/used/autos',
+    advert_update: (id)=>`/auto/used/autos/${id}`,
 
     categories: '/auto/categories',
     marks: (id) => `/auto/categories/${id}/marks`,

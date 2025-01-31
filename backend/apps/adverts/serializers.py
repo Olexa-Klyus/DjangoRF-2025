@@ -5,20 +5,30 @@ from apps.categories.serializers import CategorySerializer
 from apps.currency.services import get_calculated_prices, get_currency_points, point_is_actual
 
 
-class AdvertUpdateSerializer(serializers.ModelSerializer):
+class AdvertSearchSerializer(serializers.ModelSerializer):
+    title = serializers.CharField(source='title_advert', read_only=True)
+
+    class Meta:
+        model = AdvertModel
+        fields = ('title', 'mileage', 'region', 'city', 'price', 'currency', 'description', 'gearbox', 'fuel')
+        read_only_fields = (
+            'title', 'mileage', 'region', 'city', 'price', 'currency', 'description', 'gearbox', 'fuel')
+
+
+class AdvertGetUserAutosSerializer(serializers.ModelSerializer):
+    title = serializers.CharField(source='title_advert', read_only=True)
+
     class Meta:
         model = AdvertModel
 
-        fields = (
-            'is_active', 'mileage',
-            'region', 'city', 'profanity_edit_count',
-            'price', 'description', 'gearbox', 'fuel', 'expired_at'
-        )
-        read_only_fields = ('expired_at', 'profanity_edit_count',)
-        extra_kwargs = {'is_active': {'write_only': True, }}
+        fields = ('id', 'user_id', 'title', 'categories', 'car_mark', 'car_model', 'year', 'mileage',
+                  'region', 'city', 'profanity_edit_count', 'is_active',
+                  'price', 'price_init', 'currency', 'description', 'gearbox', 'fuel', 'expired_at')
+
+        depth = 1
 
 
-class AdvertCreateSerializer(serializers.ModelSerializer):
+class AdvertCreateUpdateSerializer(serializers.ModelSerializer):
     title = serializers.CharField(source='title_advert', read_only=True)
 
     class Meta:
@@ -36,7 +46,8 @@ class AdvertCreateSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         attrs = super().validate(attrs)
-        attrs['price_init'] = self.context['price_init']
+        if 'price_init' in self.context:
+            attrs['price_init'] = self.context['price_init']
         if 'car_mark' in self.context:
             attrs['car_mark'] = self.context['car_mark']
         if 'car_model' in self.context:

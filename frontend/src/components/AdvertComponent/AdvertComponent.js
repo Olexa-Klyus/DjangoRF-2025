@@ -9,6 +9,10 @@ const AdvertComponent = ({advert}) => {
                 navigate(`advert_info/${advert.id}`)
             }}>Перейти до оголошення {advert.id}
             </button>
+            <button onClick={() => {
+                navigate(`update/${advert.id}`, {state: advert})
+            }}>Змінити оголошення {advert.id}
+            </button>
         </div>
     )
         ;

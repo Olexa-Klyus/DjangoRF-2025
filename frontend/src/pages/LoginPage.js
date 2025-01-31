@@ -2,6 +2,7 @@ import {useForm} from "react-hook-form";
 
 import {useLocation, useNavigate} from "react-router-dom";
 import {authService} from "../services/authService";
+import {useEffect, useState} from "react";
 
 
 const LoginPage = () => {
@@ -9,10 +10,19 @@ const LoginPage = () => {
     const {register, handleSubmit} = useForm();
     const navigate = useNavigate();
 
+    const [error, setError] = useState(null);
+    useEffect(() => {
+    }, [error]);
+
     const onSubmit = async (user) => {
-        await authService.login(user)
-        navigate('/adverts')
-    }
+        try {
+            await authService.login(user)
+            navigate('/adverts')
+        } catch (err) {
+            setError(JSON.stringify([{"err_message": err.message}, err.response.data]))
+        }
+    };
+
 
     return (
         <div>

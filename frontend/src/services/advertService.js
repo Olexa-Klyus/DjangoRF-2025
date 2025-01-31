@@ -4,20 +4,27 @@ import {urls} from "../constants/urls";
 const advertService = {
     getAll: async () => {
         const response = await apiService.get(urls.adverts)
-        console.log(response)
+        console.log(response.data)
         return response.data;
     },
 
+    // getById: async (id) => {
+    //     const response = await apiService.get(urls.advert(+id));
+    //     return response.data;
+    // },
 
-    getById: async (id) => {
+    getInfo: async (id) => {
         const response = await apiService.get(urls.advert_info(+id));
         return response.data;
     },
 
-
     create: async (data) => {
-        console.log(data)
         const response = await apiService.post(urls.auto_add, data)
+        return response.data
+    },
+
+    update: async (id, data) => {
+        const response = await apiService.patch(urls.advert_update(+id), data)
         return response.data
     },
 

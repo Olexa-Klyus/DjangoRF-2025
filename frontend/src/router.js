@@ -20,6 +20,7 @@ const router = createBrowserRouter([
             {path: 'adverts', element: <AdvertsPage/>},
             {path: 'adverts/advert_info/:id', element: <AdvertInfoPage/>},
             {path: 'adverts/add', element: <AdvertFormComponent/>},
+            {path: 'adverts/update/:id', element: <AdvertFormComponent/>},
 
 
             {path: 'select', element: <NewPage/>},
